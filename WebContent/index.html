@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <title>Crawler Index Page</title>
+	  <link rel="stylesheet" type="text/css" href="style/index.css">
+	</head>
+	<body>
+		<div id="divProjectHeader">
+			<h1 id="headerProject">CSE 509 Distributed Web Crawler</h1>
+		</div>
+	  <div>
+	  	<div id="divGroup">
+	  		<a>Group Members:</a>
+	  		<a></a>
+	  		<a></a>
+	  		<a></a>
+	  		<a></a>
+	  		<a></a>
+	  	</div>
+	  
+	  	<div id="divInitialize">
+	  		<form name="initializeForm" method="post" action="initialize">
+			  Domain: <input type="text" name="domainName"><br>
+			  Number of pages to crawl: <input type="text" name="numberPages"><br>
+			  <input type="submit" value="Submit">
+			</form>
+	  	</div>
+	  
+	  
+		  <div id="divTableMain">
+		  	<table id="tableMain">
+			  <tr>
+			    <td>URL</td>
+			    <td>Content-Security Policy</td> 
+			    <td>HTTP Strict Transport Policy</td>
+			    <td>HttpOnly and Secure Cookies</td>
+			    <td>Anticlickjacking headers (X-Frame-Options)</td>
+			    <td>Nonces in web forms</td>
+			  </tr>
+			  <tr>
+			    <td>http://www.example.com</td>
+			    <td>Yes</td> 
+			    <td>No</td>
+			    <td>Yes</td>
+			    <td>No</td>
+			    <td>Yes</td>
+			  </tr>
+			</table>
+		  </div>
+	  </div>
+	</body>
+</html>

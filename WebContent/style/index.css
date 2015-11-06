@@ -1,0 +1,29 @@
+body {
+	background-color: #F5F5F5;
+}
+
+#divTableMain {
+	padding-top: 20px;
+}
+
+#tableMain {
+	width: 100%;
+	border: 1px solid black;
+}
+
+td {
+	border: 1px solid black;
+}
+
+#divGroup {
+	padding-top: 20px;
+}
+
+#divInitialize {
+	padding-top: 20px;
+}
+
+#divProjectHeader {
+	text-align: center;
+	width: 100%;
+}
