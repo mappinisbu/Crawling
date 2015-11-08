@@ -1,7 +1,7 @@
 $( document ).ready(function() {
     
 	document.getElementById('domainName').value = "https://paypal.com";
-	document.getElementById('numberPages').value = "3";
+	document.getElementById('numberPages').value = "10";
 	document.getElementById('btnResults').style.visibility = "hidden";
 	document.getElementById('loader').style.visibility = "hidden";
 	

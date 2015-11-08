@@ -1,0 +1,24 @@
+***Download apache tomcat 7.0.65
+
+https://tomcat.apache.org/download-70.cgi#7.0.65
+
+1) download Core: zip
+2) unzip
+3) put folder in C:\ directory
+
+
+***Configure apache with the project
+
+1) Click 'Servers' tab (bottom-middle)
+2) Select Apache->Tomcat v7.0 Server
+3) Next
+4) Under Tomcat installation drectory: Select Browse->apache folder you downloaded
+5) Next
+6) Move your project from available to configured
+7) Finish
+
+
+***To Run app
+
+1) Right click you project in explorer
+2) Run as->Run on server

@@ -46,13 +46,6 @@ public class UserInput extends HttpServlet {
 				System.out.println("[UserInput] JSONException: " + e);
 				response.setStatus(500);
 			}
-
-            try {
-				System.out.println(jsonUrls.toString(2));
-			} catch (JSONException e) {
-				System.out.println("[UserInput] JSONException: " + e);
-				response.setStatus(500);
-			} 
     		
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
