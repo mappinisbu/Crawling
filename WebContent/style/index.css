@@ -19,11 +19,29 @@ td {
 	padding-top: 20px;
 }
 
-#divInitialize {
+.inputContent {
 	padding-top: 20px;
+	float: left;
+}
+
+#loader {
+	padding-left:20px;
+	height: 25px;	
 }
 
 #divProjectHeader {
 	text-align: center;
 	width: 100%;
+}
+
+#showResults {
+	padding-top: 10px;
+}
+
+#btns {
+	padding-top: 10px;
+}
+
+#content {
+	height: 80px;
 }

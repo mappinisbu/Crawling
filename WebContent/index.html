@@ -3,6 +3,8 @@
 	<head>
 	  <title>Crawler Index Page</title>
 	  <link rel="stylesheet" type="text/css" href="style/index.css">
+	  <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+	  <script src="scripts/index.js"></script>
 	</head>
 	<body>
 		<div id="divProjectHeader">
@@ -18,14 +20,30 @@
 	  		<a></a>
 	  	</div>
 	  
-	  	<div id="divInitialize">
-	  		<form name="initializeForm" method="post" action="initialize">
-			  Domain: <input type="text" name="domainName"><br>
-			  Number of pages to crawl: <input type="text" name="numberPages"><br>
-			  <input type="submit" value="Submit">
-			</form>
+	  	<div id="content">
+		  	<div class="inputContent">
+		  		<div>
+		  			<span>Domain:</span>
+		  			<input id="domainName" type="text" name="name">
+		  		</div>
+		  		<div>
+		  			<span>Number:</span>
+		  			<input id="numberPages" type="text" name="number">
+		  		</div>
+		  	</div>
+		  	<div class="inputContent">
+		  		<img id="loader" src="images/loader.gif">
+		  	</div>
+		</div>
+	  	
+	  	<div id="btns">
+	  		<button id="btnSubmit" type="button">Start Crawling</button>
+	  		<button id="btnResults" type="button">Show Results</button>
 	  	</div>
 	  
+	  	<div id="showResults">
+	  		
+	  	</div>
 	  
 		  <div id="divTableMain">
 		  	<table id="tableMain">
@@ -36,14 +54,6 @@
 			    <td>HttpOnly and Secure Cookies</td>
 			    <td>Anticlickjacking headers (X-Frame-Options)</td>
 			    <td>Nonces in web forms</td>
-			  </tr>
-			  <tr>
-			    <td>http://www.example.com</td>
-			    <td>Yes</td> 
-			    <td>No</td>
-			    <td>Yes</td>
-			    <td>No</td>
-			    <td>Yes</td>
 			  </tr>
 			</table>
 		  </div>

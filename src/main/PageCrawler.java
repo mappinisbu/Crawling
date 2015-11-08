@@ -1,3 +1,4 @@
+package main;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -13,12 +14,15 @@ import org.jsoup.select.Elements;
 public class PageCrawler {
 	
 	static int maxPages = 30;
+	static String domain = "https://paypal.com";
 	static HashSet<String> urlsTraversed = new HashSet<String>();
-
-	public static void main(String[] args)  {
+	
+	public static void Crawl(String domainName, int numberPages)  {
     
+		domain = domainName;
+		maxPages = numberPages;
 		
-		processPage("https://paypal.com");
+		processPage(domain);
 
 	}
 
@@ -55,7 +59,24 @@ public class PageCrawler {
 			}
 		}
 		
+		System.out.println("Crawling Finished");
 		
+		setUrls(urlsTraversed);
+		
+	}
+	
+	/* Set urls that where traversed
+	 * @param urlsTraversed
+	 */
+	public static void setUrls(HashSet<String> urlsTraversed) {
+		PageCrawler.urlsTraversed = urlsTraversed;
+	}
+	
+	/*
+	 * Get urls that where previously traversed
+	 */
+	public static HashSet<String> getUrls() {
+		return PageCrawler.urlsTraversed;
 	}
 
 }
