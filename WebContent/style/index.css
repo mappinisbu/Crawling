@@ -1,9 +1,21 @@
-body {
-	background-color: #F5F5F5;
+html,body { 
+	height:100%;
+	background-color: #F0F0F0;
 }
 
-#divTableMain {
-	padding-top: 20px;
+#crawler {
+	background-color: black;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.divMain {
+	padding: 65px 15px 0px 15px;
+}
+
+#groupMain {
+	padding: 10px 15px 0px 15px;
 }
 
 #tableMain {
@@ -13,15 +25,36 @@ body {
 
 td {
 	border: 1px solid black;
+	width: 110px;
+	text-align: center;
 }
 
 #divGroup {
-	padding-top: 20px;
+	width: 100%;
+	background-color: #F0F0F0;
+	height: 50px;
+	position: absolute;
 }
 
-.inputContent {
-	padding-top: 20px;
+#divContent {
+	height: 100%;
+}
+
+.content {
 	float: left;
+}
+
+#contentInput {
+	width: 25%;
+    height: 100%;
+	background-color: #E8E8E8;
+}
+
+#contentTable {
+	width: 75%;
+    height: 100%;
+	background-color: #E0E0E0;
+	overflow-y: scroll;
 }
 
 #loader {
@@ -29,9 +62,8 @@ td {
 	height: 25px;	
 }
 
-#divProjectHeader {
-	text-align: center;
-	width: 100%;
+.top {
+	float: left;
 }
 
 #showResults {
@@ -43,5 +75,39 @@ td {
 }
 
 #content {
-	height: 80px;
+	height: 175px;
+}
+
+.btnCrawl {
+	width: 50%;
+    margin: 0 auto;
+}
+
+.divPopup {
+	width: 300px;
+    height: 200px;
+}
+
+.inputField {
+	float: left;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.inputDiv {
+	height: 50px;
+}
+
+#rightDomain, #rightNumber {
+	padding-left: 10px;
+	width: 175px;
+}
+
+#leftDomain, #leftNumber {
+	width: 70px;
+}
+
+#tdUrl {
+	width: 280px;
 }

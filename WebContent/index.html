@@ -3,60 +3,62 @@
 	<head>
 	  <title>Crawler Index Page</title>
 	  <link rel="stylesheet" type="text/css" href="style/index.css">
-	  <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+	  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	  <script src="scripts/index.js"></script>
 	</head>
 	<body>
-		<div id="divProjectHeader">
-			<h1 id="headerProject">CSE 509 Distributed Web Crawler</h1>
-		</div>
-	  <div>
-	  	<div id="divGroup">
-	  		<a>Group Members:</a>
-	  		<a></a>
-	  		<a></a>
-	  		<a></a>
-	  		<a></a>
-	  		<a></a>
+	<div id="crawler">
+		<div id="divGroup">
+			<div id="groupMain">
+		  		<a>Group Members: Shriya Gupta, Mahathi Priya Appini, Jihyun Yang, Parikshit Bhattacharjee, Matthew Fleishman</a>
+	  		</div>
 	  	</div>
-	  
-	  	<div id="content">
-		  	<div class="inputContent">
-		  		<div>
-		  			<span>Domain:</span>
-		  			<input id="domainName" type="text" name="name">
-		  		</div>
-		  		<div>
-		  			<span>Number:</span>
-		  			<input id="numberPages" type="text" name="number">
-		  		</div>
+		
+		<div id="divContent">
+	  		<div class="content" id="contentInput">
+	  			<div class="divMain">
+			  		<div class="inputDiv">
+			  			<div class="inputField" id="leftDomain"><a>Domain:</a></div>
+			  			<div class="inputField" id="rightDomain"><input id="domainName" type="text" name="name"></div>
+			  		</div>
+			  		<div class="inputDiv">
+			  			<div class="inputField" id="leftNumber"><a>Number:</a></div>
+			  			<div class="inputField" id="rightNumber"><input id="numberPages" type="text" name="number"></div>
+			  		</div>
+			  		<div class="inputContent">
+				  		<img id="loader" src="images/loader.gif">
+				  	</div>
+				  	<div id="btns">
+				  		<button class="btnCrawl" id="btnSubmit" type="button">Start Crawling</button>
+				  		<button class="btnCrawl" id="btnResults" type="button">Show Results</button>
+				  	</div>
+			  	</div>
 		  	</div>
-		  	<div class="inputContent">
-		  		<img id="loader" src="images/loader.gif">
-		  	</div>
-		</div>
-	  	
-	  	<div id="btns">
-	  		<button id="btnSubmit" type="button">Start Crawling</button>
-	  		<button id="btnResults" type="button">Show Results</button>
-	  	</div>
-	  
-	  	<div id="showResults">
-	  		
-	  	</div>
-	  
-		  <div id="divTableMain">
-		  	<table id="tableMain">
-			  <tr>
-			    <td>URL</td>
-			    <td>Content-Security Policy</td> 
-			    <td>HTTP Strict Transport Policy</td>
-			    <td>HttpOnly and Secure Cookies</td>
-			    <td>Anticlickjacking headers (X-Frame-Options)</td>
-			    <td>Nonces in web forms</td>
-			  </tr>
-			</table>
+		
+		  <div class="content" id="contentTable">
+		  	
+		  	<div class="divPopup" data-role="popup" id="infoPopup1"><p>Info Text</p></div>
+		  	<div class="divPopup" data-role="popup" id="infoPopup2"><p>Info Text</p></div>
+		  	<div class="divPopup" data-role="popup" id="infoPopup3"><p>Info Text</p></div>
+		  	<div class="divPopup" data-role="popup" id="infoPopup4"><p>Info Text</p></div>
+		  	<div class="divPopup" data-role="popup" id="infoPopup5"><p>Info Text</p></div>
+		  
+			  <div class="divMain">
+			  	<table id="tableMain">
+				  <tr>
+				    <td id="tdUrl"><strong>URL</strong></td>
+				    <td class="tdHeader"><strong>Content-Security Policy</strong></td> 
+				    <td class="tdHeader"><strong>HTTP Strict Transport Policy</strong></td>
+				    <td class="tdHeader"><strong>HttpOnly and Secure Cookies</strong></td>
+				    <td class="tdHeader"><strong>Anticlickjacking headers (X-Frame-Options)</strong></td>
+				    <td class="tdHeader"><strong>Nonces in web forms</strong></td>
+				  </tr>
+				</table>
+			  </div>
 		  </div>
+		</div>
 	  </div>
 	</body>
 </html>
