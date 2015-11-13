@@ -2,22 +2,28 @@ package main;
 
 import main.PageCrawler;
 import tests.*;
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
+
 
 public class Initialize {
 	
 	public static void StartCrawler(String domainName, int numberPages) {
 		
 		PageCrawler.Crawl(domainName, numberPages);
-		StartSecurityChecks();
+		//StartSecurityChecks();
 	}
 	
-	private static void StartSecurityChecks() {
+	public static Result StartSecurityChecks(Response urlResp) {
 		
-		AnticlickjackingHeaders.StartTest();
-		ContentSecurityPolicy.StartTest();
-		HttpOnlySecureCookies.StartTest();
-		HttpStrictTransportPolicy.StartTest();
-		Nonces.StartTest();
+		Result resultObj = new Result();
+		AnticlickjackingHeaders.StartTest(urlResp,resultObj);
+		ContentSecurityPolicy.StartTest(urlResp,resultObj);
+		HttpOnlySecureCookies.StartTest(urlResp,resultObj);
+		HttpStrictTransportPolicy.StartTest(urlResp,resultObj);
+		Nonces.StartTest(urlResp,resultObj);
+		
+		return resultObj;
 	}
 
 }

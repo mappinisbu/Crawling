@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import main.*;
+import tests.Result;
 
 @WebServlet("/UserInput")
 public class UserInput extends HttpServlet {
@@ -35,13 +36,26 @@ public class UserInput extends HttpServlet {
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
     	
+    	//disable caching
+    	response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+    	
     	if (request.getParameter("get").indexOf("getUrls") > -1) {
+    		
+    		System.out.println("Entered GET request");
+    		
     		HashSet<String> urlsTraversed = new HashSet<String>();
     		urlsTraversed = PageCrawler.getUrls();
     		
-    		JSONObject jsonUrls = new JSONObject();
+    		HashSet<Result> results = new HashSet<Result>();
+    		results = PageCrawler.getResults();
+    		
+    		//JSONObject jsonUrls = new JSONObject();
+    		JSONObject jsonResults = new JSONObject();
+    		
             try {
-            	jsonUrls.put("urls", urlsTraversed);
+            	//jsonUrls.put("urls", urlsTraversed);
+            	jsonResults.put("resultObjects", results);
+            	System.out.println("jsonobject:" + jsonResults);
 			} catch (JSONException e) {
 				System.out.println("[UserInput] JSONException: " + e);
 				response.setStatus(500);
@@ -49,7 +63,9 @@ public class UserInput extends HttpServlet {
     		
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
-            out.print(jsonUrls);
+            //out.print(jsonUrls);
+            //System.out.println("json Results:  "+ jsonResults);
+            out.print(jsonResults);
             out.flush();
     		response.setStatus(200);
     	} else {
