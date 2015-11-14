@@ -2,6 +2,8 @@ package tests;
 
 import org.jsoup.Connection.Response;
 
+import objects.Result;
+
 public class HttpOnlySecureCookies {
 	
 	public static void StartTest(Response urlResp, Result resultObj) {

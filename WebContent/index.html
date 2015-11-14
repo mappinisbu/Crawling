@@ -27,34 +27,45 @@
 			  			<div class="inputField" id="leftNumber"><a>Number:</a></div>
 			  			<div class="inputField" id="rightNumber"><input id="numberPages" type="text" name="number"></div>
 			  		</div>
-			  		<div class="inputContent">
+			  		<div id="loaderDiv">
 				  		<img id="loader" src="images/loader.gif">
 				  	</div>
 				  	<div id="btns">
-				  		<button class="btnCrawl" id="btnSubmit" type="button">Start Crawling</button>
-				  		<button class="btnCrawl" id="btnResults" type="button">Show Results</button>
+				  		<div class="btnHolder">
+				  			<button class="btnCrawl" id="btnSubmit" type="button">Start Crawling</button>
+				  		</div>
+				  		<div class="btnHolder">
+				  			<button class="btnCrawl" id="btnResults" type="button">Show Results</button>
+				  		</div>
+				  		<div class="btnHolder">
+				  			<button class="btnCrawl" id="btnClear" type="button">Clear Results</button>
+				  		</div>
 				  	</div>
 			  	</div>
 		  	</div>
 		
 		  <div class="content" id="contentTable">
 		  	
-		  	<div class="divPopup" data-role="popup" id="infoPopup1"><p>Info Text</p></div>
-		  	<div class="divPopup" data-role="popup" id="infoPopup2"><p>Info Text</p></div>
-		  	<div class="divPopup" data-role="popup" id="infoPopup3"><p>Info Text</p></div>
-		  	<div class="divPopup" data-role="popup" id="infoPopup4"><p>Info Text</p></div>
-		  	<div class="divPopup" data-role="popup" id="infoPopup5"><p>Info Text</p></div>
+		  	<div class="divPopup" data-role="popup" id="infoPopup1"><p>Not Enabled</p></div>
+		  	<div class="divPopup" data-role="popup" id="infoPopup2"><p>Not Enabled</p></div>
+		  	<div class="divPopup" data-role="popup" id="infoPopup3"><p>Not Enabled</p></div>
+		  	<div class="divPopup" data-role="popup" id="infoPopup4"><p>Not Enabled</p></div>
+		  	<div class="divPopup" data-role="popup" id="infoPopup5"><p>Not Enabled</p></div>
 		  
 			  <div class="divMain">
-			  	<table id="tableMain">
-				  <tr>
-				    <td id="tdUrl"><strong>URL</strong></td>
-				    <td class="tdHeader"><strong>Content-Security Policy</strong></td> 
-				    <td class="tdHeader"><strong>HTTP Strict Transport Policy</strong></td>
-				    <td class="tdHeader"><strong>HttpOnly and Secure Cookies</strong></td>
-				    <td class="tdHeader"><strong>Anticlickjacking headers (X-Frame-Options)</strong></td>
-				    <td class="tdHeader"><strong>Nonces in web forms</strong></td>
-				  </tr>
+			  	<table id="tableCrawl">
+				  	<thead>
+					  <tr>
+					    <td id="tdUrl"><strong>URL</strong></td>
+					    <td class="tdHeader"><strong>Content-Security Policy</strong></td> 
+					    <td class="tdHeader"><strong>HTTP Strict Transport Policy</strong></td>
+					    <td class="tdHeader"><strong>HttpOnly and Secure Cookies</strong></td>
+					    <td class="tdHeader"><strong>Anticlickjacking headers (X-Frame-Options)</strong></td>
+					    <td class="tdHeader"><strong>Nonces in web forms</strong></td>
+					  </tr>
+					</thead>
+					<tbody id="tableBody">
+					</tbody>
 				</table>
 			  </div>
 		  </div>

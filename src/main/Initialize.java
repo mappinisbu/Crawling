@@ -1,6 +1,7 @@
 package main;
 
 import main.PageCrawler;
+import objects.Result;
 import tests.*;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;

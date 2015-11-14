@@ -17,7 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import main.*;
-import tests.Result;
+import objects.Result;
 
 @WebServlet("/UserInput")
 public class UserInput extends HttpServlet {
@@ -39,7 +39,7 @@ public class UserInput extends HttpServlet {
     	//disable caching
     	response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
     	
-    	if (request.getParameter("get").indexOf("getUrls") > -1) {
+    	if (request.getParameter("option").contains("getUrls")) {
     		
     		System.out.println("Entered GET request");
     		
@@ -68,7 +68,11 @@ public class UserInput extends HttpServlet {
             out.print(jsonResults);
             out.flush();
     		response.setStatus(200);
+    	} else if (request.getParameter("option").contains("clearUrls")) {
+    		PageCrawler.clearResults();
+    		response.setStatus(200);
     	} else {
+    	
     		response.setStatus(400);
     	}   	
     	

@@ -11,7 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import tests.Result;
+import objects.Result;
 
 
 public class PageCrawler {
@@ -66,14 +66,6 @@ public class PageCrawler {
 			resultObj.setUrlName(url);
 			PageCrawler.results.add(resultObj);
 			
-			/*
-			if(urlResp.hasHeader("Strict-Transport-Security"))
-				System.out.println("secure header: " + url);
-			else
-				System.out.println("non secure header: "+ url);
-		
-			*/
-			
 			
 			//get all links and recursively call the processPage method
 			Elements questions = doc.select("a[href]");
@@ -85,17 +77,16 @@ public class PageCrawler {
 		
 		System.out.println("Crawling Finished");
 		
-		//setUrls(urlsTraversed);
-		
 	}
 	
-	/* Set urls that where traversed
-	 * @param urlsTraversed
+	/*
+	 * Clear results from previous crawl
 	 */
-	public static void setUrls(HashSet<String> urlsTraversed) {
-		PageCrawler.urlsTraversed = urlsTraversed;
+	public static void clearResults() {
+		PageCrawler.urlsTraversed = new HashSet<String>();
+		PageCrawler.results = new HashSet<Result>();
 	}
-	
+		
 	/*
 	 * Get urls that where previously traversed
 	 */
