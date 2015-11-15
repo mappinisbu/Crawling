@@ -3,8 +3,12 @@ package main;
 import main.PageCrawler;
 import objects.Result;
 import tests.*;
-import org.jsoup.Connection;
-import org.jsoup.Connection.Response;
+
+import java.util.List;
+import java.util.Map;
+
+//import org.jsoup.Connection;
+//import org.jsoup.Connection.Response;
 
 
 public class Initialize {
@@ -15,14 +19,13 @@ public class Initialize {
 		//StartSecurityChecks();
 	}
 	
-	public static Result StartSecurityChecks(Response urlResp) {
-		
+	public static Result StartSecurityChecks(Map<String, List<String>> urlRespMap) {
 		Result resultObj = new Result();
-		AnticlickjackingHeaders.StartTest(urlResp,resultObj);
-		ContentSecurityPolicy.StartTest(urlResp,resultObj);
-		HttpOnlySecureCookies.StartTest(urlResp,resultObj);
-		HttpStrictTransportPolicy.StartTest(urlResp,resultObj);
-		Nonces.StartTest(urlResp,resultObj);
+		AnticlickjackingHeaders.StartTest(urlRespMap,resultObj);
+		ContentSecurityPolicy.StartTest(urlRespMap,resultObj);
+		HttpOnlySecureCookies.StartTest(urlRespMap,resultObj);
+		HttpStrictTransportPolicy.StartTest(urlRespMap,resultObj);
+		Nonces.StartTest(urlRespMap,resultObj);
 		
 		return resultObj;
 	}

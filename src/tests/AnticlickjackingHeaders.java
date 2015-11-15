@@ -1,14 +1,17 @@
 package tests;
 
-import org.jsoup.Connection.Response;
+import java.util.List;
+import java.util.Map;
+
+//import org.jsoup.Connection.Response;
 
 import objects.Result;
 
 public class AnticlickjackingHeaders {
 
-	public static void StartTest(Response urlResp, Result resultObj) {
+	public static void StartTest(Map<String, List<String>> urlRespMap, Result resultObj) {
 		System.out.print("Anti-Click-Jacking header: ");
-		if(urlResp.hasHeader("???")){
+		if(urlRespMap.containsKey("???")){
 			System.out.print("Found\n");
 		    resultObj.setAntiClickEnabled(true); 
 		}else{

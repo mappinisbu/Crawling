@@ -52,7 +52,7 @@ function addUrlsTable(data) {
 	    }
 	    if(data.resultObjects[index].httpOnlyEnabled) {
 	    	lblPopup3="Yes";
-	    	document.getElementById('infoPopup3').innerHTML = "HttpOnly and Secure Cookies";
+	    	document.getElementById('infoPopup3').innerHTML = data.resultObjects[index].httpOnlyDetails;
 	    }
 	    if(data.resultObjects[index].antiClickEnabled) {
 	    	lblPopup4="Yes";

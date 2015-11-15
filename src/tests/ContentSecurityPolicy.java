@@ -1,14 +1,17 @@
 package tests;
 
-import org.jsoup.Connection.Response;
+import java.util.List;
+import java.util.Map;
+
+//import org.jsoup.Connection.Response;
 
 import objects.Result;
 
 public class ContentSecurityPolicy {
 
-	public static void StartTest(Response urlResp, Result resultObj) {
+	public static void StartTest(Map<String, List<String>> urlRespMap, Result resultObj) {
 		System.out.print("Content-Security-Policy header: ");
-		if(urlResp.hasHeader("Content-Security-Policy")){
+		if(urlRespMap.containsKey("Content-Security-Policy")){
 			System.out.print("Found\n");
 		    resultObj.setCspEnabled(true); 
 		}else{
