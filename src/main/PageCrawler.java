@@ -65,6 +65,7 @@ public class PageCrawler {
 				
 				EditorKit kit = new HTMLEditorKit();
 			    doc = (HTMLDocument) kit.createDefaultDocument();
+			    doc.putProperty("IgnoreCharsetDirective", new Boolean(true));
 			    kit.read(rd, doc, 0);
 				
 				/*
@@ -110,7 +111,10 @@ public class PageCrawler {
 		if (hyperlink.equals(null)) return null;
 		if (hyperlink.charAt(0)=='#') return null;
 		
-		//Add code to process relative links
+		if (hyperlink.charAt(0)=='/'){
+			//Add code to process relative links
+		}
+	
 		return hyperlink;	
 	}
 	
