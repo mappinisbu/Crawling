@@ -1,9 +1,5 @@
 package main;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashSet;
@@ -65,17 +61,13 @@ public class PageCrawler {
 				
 				URL obj = new URL(url);
 				URLConnection conn = obj.openConnection();
-				InputStreamReader rd = new InputStreamReader(conn.getInputStream());
-				BufferedReader br = new BufferedReader(rd);
-				String rawHTML = getStringFromBufferedReader(br);
+				Reader rd = new InputStreamReader(conn.getInputStream());
 				
 				EditorKit kit = new HTMLEditorKit();
 			    doc = (HTMLDocument) kit.createDefaultDocument();
 			    doc.putProperty("IgnoreCharsetDirective", new Boolean(true));
-			    kit.read(new InputStreamReader(new ByteArrayInputStream(rawHTML.getBytes())), doc, 0);
-			    
-			    // Also read into a jsoup object for parsing
-			   
+			    kit.read(rd, doc, 0);
+				
 				/*
 				String contentType= conn.getContentType();
 				if (contentType.contains("html")) {...} 
@@ -85,7 +77,7 @@ public class PageCrawler {
 				
 				printHeaders(urlRespMap);
 								
-				Result resultObj=Initialize.StartSecurityChecks(url, urlRespMap, rawHTML);
+				Result resultObj=Initialize.StartSecurityChecks(urlRespMap);
 				resultObj.setUrlName(url);
 				PageCrawler.results.add(resultObj);
 				
@@ -102,7 +94,6 @@ public class PageCrawler {
 				SimpleAttributeSet saSet = (SimpleAttributeSet) i.getAttributes();
 				String hyperlink = (String) saSet.getAttribute(HTML.Attribute.HREF);
 				//add code to handle relative links by prepending the current page's URL
-				
 				String newLink=filterLinks(hyperlink);
 				if (newLink != null){
 					processPage(newLink);
@@ -116,59 +107,14 @@ public class PageCrawler {
 		
 	}
 	
-	private static String getStringFromBufferedReader(BufferedReader br) {
-		StringBuilder sb = new StringBuilder();
-		String line;
-		try {
-			
-			  while ((line = br.readLine()) != null)
-			  {
-				sb.append(line);
-			  }
-
-		} 
-		catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		return sb.toString();
-	}
-
 	public static String filterLinks(String hyperlink ) {
-		if(hyperlink == null)
-			return null;
-		
-		if (hyperlink.equals(null)) 
-			return null;
-		
-		if(hyperlink.isEmpty())
-			return null;
-		
+		if (hyperlink.equals(null)) return null;
 		if (hyperlink.charAt(0)=='#') return null;
-		
-		if(hyperlink.contains("javascript"))
-		{
-			return null;
-		}
 		
 		if (hyperlink.charAt(0)=='/'){
 			//Add code to process relative links
-			return null;
 		}
-		
-		if(hyperlink.contains("shtml"))
-		{
-			return null;
-		}
-		
+	
 		return hyperlink;	
 	}
 	

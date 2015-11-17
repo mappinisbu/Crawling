@@ -19,13 +19,13 @@ public class Initialize {
 		//StartSecurityChecks();
 	}
 	
-	public static Result StartSecurityChecks(String url, Map<String, List<String>> urlRespMap, String rawHTML) {
+	public static Result StartSecurityChecks(Map<String, List<String>> urlRespMap) {
 		Result resultObj = new Result();
 		AnticlickjackingHeaders.StartTest(urlRespMap,resultObj);
 		ContentSecurityPolicy.StartTest(urlRespMap,resultObj);
 		HttpOnlySecureCookies.StartTest(urlRespMap,resultObj);
 		HttpStrictTransportPolicy.StartTest(urlRespMap,resultObj);
-		Nonces.StartTest(url, urlRespMap,rawHTML, resultObj);
+		Nonces.StartTest(urlRespMap,resultObj);
 		
 		return resultObj;
 	}
