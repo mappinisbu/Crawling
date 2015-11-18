@@ -22,8 +22,7 @@ import objects.Result;
 @WebServlet("/UserInput")
 public class UserInput extends HttpServlet {
  
-    protected void doPost(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	String domainName = request.getParameter("domainName");
     	int numberPages = Integer.parseInt(request.getParameter("numberPages"));
@@ -33,8 +32,7 @@ public class UserInput extends HttpServlet {
     	response.setStatus(200);
     }
     
-    protected void doGet(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	//disable caching
     	response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
