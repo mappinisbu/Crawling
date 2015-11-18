@@ -43,11 +43,11 @@ public class UserInput extends HttpServlet {
     		
     		System.out.println("Entered GET request");
     		
-    		HashSet<String> urlsTraversed = new HashSet<String>();
-    		urlsTraversed = PageCrawler.getUrls();
+    		//HashSet<String> urlsTraversed = new HashSet<String>();
+    		//urlsTraversed = PageCrawler.getUrls();
     		
     		HashSet<Result> results = new HashSet<Result>();
-    		results = PageCrawler.getResults();
+    		results = Controller.getResults();
     		
     		//JSONObject jsonUrls = new JSONObject();
     		JSONObject jsonResults = new JSONObject();
@@ -69,7 +69,7 @@ public class UserInput extends HttpServlet {
             out.flush();
     		response.setStatus(200);
     	} else if (request.getParameter("option").contains("clearUrls")) {
-    		PageCrawler.clearResults();
+    		Controller.clearResults();
     		response.setStatus(200);
     	} else {
     	

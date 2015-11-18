@@ -15,7 +15,8 @@ public class Initialize {
 	
 	public static void StartCrawler(String domainName, int numberPages) {
 		
-		PageCrawler.Crawl(domainName, numberPages);
+		System.out.println("Start crawler!!!!!!!!!!!!!!!!!1");
+		Controller.initialize(domainName, numberPages);
 		//StartSecurityChecks();
 	}
 	

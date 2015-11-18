@@ -1,5 +1,10 @@
 package main;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,91 +35,132 @@ import java.net.URLConnection;
 import objects.Result;
 
 
-public class PageCrawler {
+public class PageCrawler implements Runnable{
 	
-	static int maxPages = 30;
-	static String domain = "https://paypal.com";
-	static HashSet<String> urlsTraversed = new HashSet<String>();
-	static HashSet<Result> results = new HashSet<Result>();
-	public static void Crawl(String domainName, int numberPages)  {
-    
-		domain = domainName;
-		maxPages = numberPages;
-		
-		processPage(domain);
+	ConcurrentLinkedQueue<String> queue;
+	Set<String> urlsTraversed;
+	int maxPage;
+	AtomicIntegerArray array;
+	int threadNum;
+	Set<Result> resultSet;
+	private volatile boolean flag = true;
 
+	//static HashSet<String> urlsTraversed = new HashSet<String>();
+	//static HashSet<Result> results = new HashSet<Result>();
+
+	public PageCrawler(ConcurrentLinkedQueue<String> urlQueue, Set<String> urlSet, int maxPage, AtomicIntegerArray arr, int num, Set<Result> resultSet){
+		this.queue = urlQueue;
+		this.urlsTraversed = urlSet;
+		this.maxPage = maxPage;
+		this.array = arr;
+		this.threadNum = num;
+		this.resultSet = resultSet;
+		
 	}
-
-	private static void processPage(String url) {
+	
+	public void run(){
+		//System.out.println("************************PageCrawler "+threadNum+" started***************************");
+	/*	Pop from the queue and check if the url was already crawled.
+		If not put it to the hashSet.
+		Start crawling.
+		Put all the found urls to the Queue if not in the hashset already.
+		Check the 5 policies 
+	*/
 		
-		while(!PageCrawler.urlsTraversed.contains(url))
-		{
-			if(urlsTraversed.size() == maxPages)
-				return;
+		String url;
+		int count=1;
+		int numPagesAdded = 0;
+		while(urlsTraversed.size() < maxPage && flag == true){
 			
-			PageCrawler.urlsTraversed.add(url);
-			//Connection urlConn = null;
-			HTMLDocument doc = null;
-			
-			System.out.println("==================================");
-			System.out.println("Trying to connect to  url:" + url);
-			try {
+			if(queue.size()>0){
+				url = queue.poll();
 				
-				//urlConn = Jsoup.connect(url);
-				//doc = urlConn.get();
-				
-				URL obj = new URL(url);
-				URLConnection conn = obj.openConnection();
-				InputStreamReader rd = new InputStreamReader(conn.getInputStream());
-				BufferedReader br = new BufferedReader(rd);
-				String rawHTML = getStringFromBufferedReader(br);
-				
-				EditorKit kit = new HTMLEditorKit();
-			    doc = (HTMLDocument) kit.createDefaultDocument();
-			    doc.putProperty("IgnoreCharsetDirective", new Boolean(true));
-			    kit.read(new InputStreamReader(new ByteArrayInputStream(rawHTML.getBytes())), doc, 0);
-			    
-			    // Also read into a jsoup object for parsing
-			   
-				/*
-				String contentType= conn.getContentType();
-				if (contentType.contains("html")) {...} 
-				*/
-				
-				Map<String, List<String>> urlRespMap = conn.getHeaderFields();
-				
-				printHeaders(urlRespMap);
-								
-				Result resultObj=Initialize.StartSecurityChecks(url, urlRespMap, rawHTML);
-				resultObj.setUrlName(url);
-				PageCrawler.results.add(resultObj);
-				
-				
-			} catch (Exception e) {
-				
-				e.printStackTrace();
-				return;
-			}
-			
-			HTMLDocument.Iterator i = doc.getIterator(HTML.Tag.A);
-			
-			while (i.isValid()){
-				SimpleAttributeSet saSet = (SimpleAttributeSet) i.getAttributes();
-				String hyperlink = (String) saSet.getAttribute(HTML.Attribute.HREF);
-				//add code to handle relative links by prepending the current page's URL
-				String newLink=filterLinks(hyperlink);
-				if (newLink != null){
-					processPage(newLink);
+				if(url!=null && !urlsTraversed.contains(url)){
+					
+					//if(urlsTraversed.size() == maxPages)
+						//return;
+					System.out.println("PageCrawler "+threadNum+" processing, urlSetsize: "+urlsTraversed.size()+"***************************");
+					urlsTraversed.add(url);
+					System.out.println("Count: "+count+", Start crawling page "+url);
+					count++;
+					//Connection urlConn = null;
+					HTMLDocument doc = null;
+					
+					System.out.println("==================================");
+					System.out.println("Trying to connect to  url:" + url);
+					try {
+						
+						//urlConn = Jsoup.connect(url);
+						//doc = urlConn.get();
+						
+						URL obj = new URL(url);
+						URLConnection conn = obj.openConnection();
+						InputStreamReader rd = new InputStreamReader(conn.getInputStream());
+						BufferedReader br = new BufferedReader(rd);
+						String rawHTML = getStringFromBufferedReader(br);
+						
+						EditorKit kit = new HTMLEditorKit();
+					    doc = (HTMLDocument) kit.createDefaultDocument();
+					    doc.putProperty("IgnoreCharsetDirective", new Boolean(true));
+					    kit.read(new InputStreamReader(new ByteArrayInputStream(rawHTML.getBytes())), doc, 0);
+					    
+					    // Also read into a jsoup object for parsing
+					   
+						/*
+						String contentType= conn.getContentType();
+						if (contentType.contains("html")) {...} 
+						*/
+						
+					    
+					    HTMLDocument.Iterator i = doc.getIterator(HTML.Tag.A);
+						
+						while (i.isValid()){
+							SimpleAttributeSet saSet = (SimpleAttributeSet) i.getAttributes();
+							String hyperlink = (String) saSet.getAttribute(HTML.Attribute.HREF);
+							//add code to handle relative links by prepending the current page's URL
+							String newLink=filterLinks(hyperlink);
+							if (newLink != null && !queue.contains(newLink)){
+								//processPage(newLink);
+								queue.add(newLink);
+							}
+							i.next();
+						}
+						
+						//******Write the number of pages added to the array******
+						
+						//numPagesAdded = ...;
+						//array.set(threadNum,numPagesAdded);
+					    
+					    
+					    
+						Map<String, List<String>> urlRespMap = conn.getHeaderFields();
+						
+						printHeaders(urlRespMap);
+										
+						Result resultObj=Initialize.StartSecurityChecks(url, urlRespMap, rawHTML);
+						resultObj.setUrlName(url);
+						resultSet.add(resultObj);
+						
+						
+					} catch (Exception e) {
+						
+						e.printStackTrace();
+						return;
+					}
+					
 				}
-				i.next();
 			}
-			
 		}
-		
-		System.out.println("Crawling Finished");
+		System.out.println("==============Thread "+threadNum+" terminating==============");
+		System.out.println("urlstraversed size: "+urlsTraversed.size());
+		//Controller.finish();
 		
 	}
 	
+	public void finish() {
+        flag = false;
+    }
+
 	private static String getStringFromBufferedReader(BufferedReader br) {
 		StringBuilder sb = new StringBuilder();
 		String line;
@@ -124,7 +170,7 @@ public class PageCrawler {
 			  {
 				sb.append(line);
 			  }
-
+	
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -137,18 +183,18 @@ public class PageCrawler {
 				}
 			}
 		}
-
+	
 		return sb.toString();
 	}
-
+	
 	public static String filterLinks(String hyperlink ) {
 		if(hyperlink == null)
 			return null;
 		if (hyperlink.equals(null)) return null;
 		
-		if (hyperlink.charAt(0)=='#') return null;
+		if (hyperlink.length()>0 && hyperlink.charAt(0)=='#') return null;
 		
-		if (hyperlink.charAt(0)=='/'){
+		if (hyperlink.length()>0 && hyperlink.charAt(0)=='/'){
 			//Add code to process relative links
 			return null;
 		}
@@ -191,7 +237,7 @@ public class PageCrawler {
 		if (cookieContent != null) 
 			cookieCount=cookieContent.size();
 		
-
+	
 		if (cookieCount>0){
 			System.out.println("----------Cookie values:-----------");
 			for(String str: cookieContent){
@@ -217,25 +263,6 @@ public class PageCrawler {
 	}
 	
 	
-	
-	
-	
-	/*
-	 * Clear results from previous crawl
-	 */
-	public static void clearResults() {
-		PageCrawler.urlsTraversed = new HashSet<String>();
-		PageCrawler.results = new HashSet<Result>();
-	}
-		
-	/*
-	 * Get urls that where previously traversed
-	 */
-	public static HashSet<String> getUrls() {
-		return PageCrawler.urlsTraversed;
-	}
 
-	public static HashSet<Result> getResults() {
-		return PageCrawler.results;
-	}
 }
+
