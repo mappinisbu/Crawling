@@ -85,6 +85,7 @@ public class PageCrawler implements Runnable{
 					count++;
 					//Connection urlConn = null;
 					HTMLDocument doc = null;
+					URL urlobj = null;
 					
 					System.out.println("==================================");
 					System.out.println("Trying to connect to  url:" + url);
@@ -93,8 +94,9 @@ public class PageCrawler implements Runnable{
 						//urlConn = Jsoup.connect(url);
 						//doc = urlConn.get();
 						
-						URL obj = new URL(url);
-						URLConnection conn = obj.openConnection();
+						urlobj = new URL(url);
+						System.out.println("Domain = "+ urlobj.getHost());
+						URLConnection conn = urlobj.openConnection();
 						InputStreamReader rd = new InputStreamReader(conn.getInputStream());
 						BufferedReader br = new BufferedReader(rd);
 						String rawHTML = getStringFromBufferedReader(br);
@@ -118,7 +120,8 @@ public class PageCrawler implements Runnable{
 							SimpleAttributeSet saSet = (SimpleAttributeSet) i.getAttributes();
 							String hyperlink = (String) saSet.getAttribute(HTML.Attribute.HREF);
 							//add code to handle relative links by prepending the current page's URL
-							String newLink=filterLinks(hyperlink);
+							String newLink=filterLinks(hyperlink,urlobj);
+							System.out.println("Raw link= "+hyperlink+"\n"+"Parsed hyperlink = "+newLink+"\n");
 							if (newLink != null && !queue.contains(newLink)){
 								//processPage(newLink);
 								queue.add(newLink);
@@ -187,21 +190,41 @@ public class PageCrawler implements Runnable{
 		return sb.toString();
 	}
 	
-	public static String filterLinks(String hyperlink ) {
-		if(hyperlink == null)
-			return null;
+public static String filterLinks(String hyperlink,URL urlobj ) {
+		
+		//System.out.println("raw hyperlink = "+hyperlink);
+		if(hyperlink == null) 		return null;
 		if (hyperlink.equals(null)) return null;
+		if (hyperlink.isEmpty())	return null;
+		if (hyperlink.charAt(0)=='#') return null;
 		
-		if (hyperlink.length()>0 && hyperlink.charAt(0)=='#') return null;
-		
-		if (hyperlink.length()>0 && hyperlink.charAt(0)=='/'){
-			//Add code to process relative links
-			return null;
+		//process relative links
+		if (hyperlink.charAt(0)=='/'){
+			return urlobj.getProtocol()+"://"+urlobj.getAuthority()+hyperlink;
 		}
-	
-		return hyperlink;	
-	}
-	
+		
+		if ( hyperlink.startsWith("http://")|| hyperlink.startsWith("https://")) 
+			return hyperlink;
+		else{
+			String originalURL = urlobj.toString();
+			boolean endsWithSlash=false;
+			int indexOfLastSlash =0;
+			//check if originalurl ends with a /
+			
+			if (originalURL.charAt(originalURL.length()-1)=='/')
+				endsWithSlash=true;
+			
+			if(endsWithSlash)
+				return originalURL+hyperlink;
+			else{
+				indexOfLastSlash=originalURL.lastIndexOf("/", originalURL.length()-1);
+				return originalURL.substring(0,indexOfLastSlash)+"/"+hyperlink;
+			}
+				
+			
+			
+		}	
+	}	
 	public static void printHeaders(Map<String, List<String>> urlRespMap ) {
 		
 		System.out.println("Printing All Response Headers");
