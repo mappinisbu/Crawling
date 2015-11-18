@@ -137,3 +137,8 @@ td {
     margin-right: auto;
     width: 50%;
 }
+
+#infoPopup1, #infoPopup2, #infoPopup3, #infoPopup4, #infoPopup5 {
+	width: 750px;
+    height: 300px;
+}

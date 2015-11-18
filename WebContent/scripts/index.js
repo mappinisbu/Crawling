@@ -44,11 +44,11 @@ function addUrlsTable(data) {
 	    
 	    if(data.resultObjects[index].cspEnabled) {
 	    	lblPopup1="Yes";
-	    	document.getElementById('infoPopup1').innerHTML = "Content-Security Policy";
+	    	document.getElementById('infoPopup1').innerHTML = data.resultObjects[index].cspDetails;
 	    }
 	    if(data.resultObjects[index].strictEnabled) {
 	    	lblPopup2="Yes";
-	    	document.getElementById('infoPopup2').innerHTML = "HTTP Strict Transport Policy";
+	    	document.getElementById('infoPopup2').innerHTML = data.resultObjects[index].strictDetails;
 	    }
 	    if(data.resultObjects[index].httpOnlyEnabled) {
 	    	lblPopup3="Yes";
@@ -56,7 +56,7 @@ function addUrlsTable(data) {
 	    }
 	    if(data.resultObjects[index].antiClickEnabled) {
 	    	lblPopup4="Yes";
-	    	document.getElementById('infoPopup4').innerHTML = "Anticlickjacking headers (X-Frame-Options)";
+	    	document.getElementById('infoPopup4').innerHTML = data.resultObjects[index].antiClickDetails;
 	    }
 	    if(data.resultObjects[index].noncesEnabled) {
 	    	lblPopup5="Yes";
