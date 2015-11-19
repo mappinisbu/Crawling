@@ -54,32 +54,42 @@ function addUrlsTable(data) {
 	
 	for (var index = 0; index < data.resultObjects.length; index++) {
 		
-	    jsUrlName = data.resultObjects[index].urlName;
+		jsUrlName = data.resultObjects[index].urlName;
 	    
 	    if(data.resultObjects[index].cspEnabled) {
 	    	lblPopup1="Yes";
 	    	document.getElementById('infoPopup1').innerHTML = data.resultObjects[index].cspDetails;
 	    	countCsp++;
+	    } else {
+	    	lblPopup1 = "No";
 	    }
 	    if(data.resultObjects[index].strictEnabled) {
 	    	lblPopup2="Yes";
 	    	document.getElementById('infoPopup2').innerHTML = data.resultObjects[index].strictDetails;
 	    	countStrict++;
+	    } else {
+	    	lblPopup2 = "No";
 	    }
 	    if(data.resultObjects[index].httpOnlyEnabled) {
 	    	lblPopup3="Yes";
 	    	document.getElementById('infoPopup3').innerHTML = data.resultObjects[index].httpOnlyDetails;
 	    	countHttpOnly++;
+	    } else {
+	    	lblPopup3 = "No";
 	    }
 	    if(data.resultObjects[index].antiClickEnabled) {
 	    	lblPopup4="Yes";
 	    	document.getElementById('infoPopup4').innerHTML = data.resultObjects[index].antiClickDetails;
 	    	countAntiClick++;
+	    } else {
+	    	lblPopup4 = "No";
 	    }
 	    if(data.resultObjects[index].noncesEnabled) {
 	    	lblPopup5="Yes";
 	    	document.getElementById('infoPopup5').innerHTML = "Nonces in web forms";
 	    	countNonces++;
+	    } else {
+	    	lblPopup5 = "No";
 	    }
 	    
 	    $('#tableBody').append('<tr><td>'+jsUrlName+'</td><td>'+aPopup1+lblPopup1+'</a></td><td>'+aPopup2+lblPopup2+'</a></td><td>'+aPopup3+lblPopup3+
@@ -93,6 +103,7 @@ function addUrlsTable(data) {
 
 function showResultData() {
 
+	//Add percentages to the results data table
 	document.getElementById('resultSecureUrls').innerHTML = "Fully Secure Urls: " + ( (countSecure/numberOfUrls) * 100 ).toString() + " %";
 	document.getElementById('resultDataCsp').innerHTML = nameCsp + ": " + ( (countCsp/numberOfUrls) * 100 ).toString() + " %";
 	document.getElementById('resultDataStrict').innerHTML = nameStrict + ": " + ( (countStrict/numberOfUrls) * 100 ).toString() + " %";
@@ -100,6 +111,7 @@ function showResultData() {
 	document.getElementById('resultDataAntiClick').innerHTML = nameAntiClick + ": " + ( (countAntiClick/numberOfUrls) * 100 ).toString() + " %";
 	document.getElementById('resultDataNonces').innerHTML = nameNonces + ": " + ( (countNonces/numberOfUrls) * 100 ).toString() + " %";
 
+	//Color the data based on percentage threshold (50%)
 	resultDataColoring(countSecure/numberOfUrls, "resultSecureUrls");
 	resultDataColoring(countCsp/numberOfUrls, "resultDataCsp");
 	resultDataColoring(countStrict/numberOfUrls, "resultDataStrict");
@@ -109,13 +121,12 @@ function showResultData() {
 }
 
 function resultDataColoring(percent, element) {
-	//If % >= .5, make green
+	//If % >= .5 make green, If % < .5, make red
 	if (percent >= .5) {
 		document.getElementById(element).style.color = "green";
 	} else {
 		document.getElementById(element).style.color = "red";
 	}
-	//If % < .5, make red
 }
 
 function getUrls() {
