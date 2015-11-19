@@ -74,6 +74,7 @@ td {
 #btns {
 	padding-top: 10px;
 	position: relative;
+	height: 70px;
 }
 
 #content {
@@ -141,4 +142,26 @@ td {
 #infoPopup1, #infoPopup2, #infoPopup3, #infoPopup4, #infoPopup5 {
 	width: 750px;
     height: 300px;
+}
+
+.tdResults {
+	width: 100%;
+	height: 40px;
+}
+
+#tableResults {
+	border: 1px solid black;
+	width: 100%;
+}
+
+#divResultsData {
+	padding: 0px 15px 0px 15px;
+    position: absolute;
+    bottom: 0px;
+    margin-bottom: 15px;
+    height: 50%;
+}
+
+#tableResults td {
+	text-align: left;
 }
