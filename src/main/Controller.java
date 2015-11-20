@@ -15,7 +15,7 @@ public class Controller {
 	static String domainName;
 	static int maxPage;
 	static HashSet<String> urls;
-	static HashSet<Result> results;
+	static HashSet<Result> results = new HashSet<Result>();
 	
 	
 	public static void initialize(String domain, int maxnumPage){
@@ -112,6 +112,15 @@ public class Controller {
 		System.out.println("***************Controller terminating*****************");
 		
 		urls = new HashSet<String>(urlSet);
+		Iterator<Result> iter = resultSet.iterator();
+		int count=0;
+		/*while(iter.hasNext()){
+			System.out.println("Inside while");
+			if(count<maxPage){
+				results.add(iter.next());
+				count++;
+			}
+		}*/
 		results = new HashSet<Result>(resultSet);
 	}
 	

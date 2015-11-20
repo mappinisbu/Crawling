@@ -22,6 +22,8 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import java.net.MalformedURLException;
+
 //import org.jsoup.Connection;
 //import org.jsoup.Connection.Response;
 //import org.jsoup.Jsoup;
@@ -81,7 +83,7 @@ public class PageCrawler implements Runnable{
 						//return;
 					System.out.println("PageCrawler "+threadNum+" processing, urlSetsize: "+urlsTraversed.size()+"***************************");
 					urlsTraversed.add(url);
-					System.out.println("Count: "+count+", Start crawling page "+url);
+					System.out.println("Start crawling page "+url);
 					count++;
 					//Connection urlConn = null;
 					HTMLDocument doc = null;
@@ -115,24 +117,23 @@ public class PageCrawler implements Runnable{
 						
 					    
 					    HTMLDocument.Iterator i = doc.getIterator(HTML.Tag.A);
-						
+						int numUrlAdded=0;
 						while (i.isValid()){
 							SimpleAttributeSet saSet = (SimpleAttributeSet) i.getAttributes();
 							String hyperlink = (String) saSet.getAttribute(HTML.Attribute.HREF);
 							//add code to handle relative links by prepending the current page's URL
 							String newLink=filterLinks(hyperlink,urlobj);
 							System.out.println("Raw link= "+hyperlink+"\n"+"Parsed hyperlink = "+newLink+"\n");
-							if (newLink != null && !queue.contains(newLink)){
+							if (newLink != null && !queue.contains(newLink) && !urlsTraversed.contains(newLink)){
 								//processPage(newLink);
 								queue.add(newLink);
+								numUrlAdded++;
 							}
 							i.next();
 						}
 						
 						//******Write the number of pages added to the array******
-						
-						//numPagesAdded = ...;
-						//array.set(threadNum,numPagesAdded);
+						array.set(threadNum,numPagesAdded);
 					    
 					    
 					    
@@ -142,7 +143,8 @@ public class PageCrawler implements Runnable{
 										
 						Result resultObj=Initialize.StartSecurityChecks(url, urlRespMap, rawHTML);
 						resultObj.setUrlName(url);
-						resultSet.add(resultObj);
+						if(resultSet.size()<maxPage)
+							resultSet.add(resultObj);
 						
 						
 					} catch (Exception e) {
@@ -191,20 +193,59 @@ public class PageCrawler implements Runnable{
 	}
 	
 public static String filterLinks(String hyperlink,URL urlobj ) {
-		
+	
+	
+	
 		//System.out.println("raw hyperlink = "+hyperlink);
 		if(hyperlink == null) 		return null;
 		if (hyperlink.equals(null)) return null;
 		if (hyperlink.isEmpty())	return null;
 		if (hyperlink.charAt(0)=='#') return null;
 		
+		
+		
 		//process relative links
 		if (hyperlink.charAt(0)=='/'){
 			return urlobj.getProtocol()+"://"+urlobj.getAuthority()+hyperlink;
 		}
 		
-		if ( hyperlink.startsWith("http://")|| hyperlink.startsWith("https://")) 
-			return hyperlink;
+		
+		
+		
+		if ( hyperlink.startsWith("http://")|| hyperlink.startsWith("https://")){
+			URL domainURL = null;
+			try {
+				domainURL = new URL(Controller.domainName);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			URL crawledURL = null;
+			try {
+				crawledURL = new URL(hyperlink);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			String givenDomain= domainURL.getHost();
+			String crawledUrlDomain = crawledURL.getHost();
+			
+			if(givenDomain.startsWith("www.")){
+				givenDomain = givenDomain.substring(4);
+			}
+			if(crawledUrlDomain.startsWith("www.")){
+				crawledUrlDomain = crawledUrlDomain.substring(4);
+			}
+			
+			if(!givenDomain.equals(crawledUrlDomain)){
+				System.out.println("###################different host: "+domainURL.getHost()+"   "+crawledURL.getHost());
+				return null;
+			}else
+				return hyperlink;
+			
+		}
+			
 		else{
 			String originalURL = urlobj.toString();
 			boolean endsWithSlash=false;
