@@ -10,7 +10,7 @@ var nameAntiClick = "Anticlickjacking Headers";
 var nameNonces = "Nonces";
 var jsUrlName = "http://www.example.com/" //Replace with Url name
 var lblPopup1 = "No"; //Replace with yes/no for Content-Security Policy
-var lblPopup2 = "No"; //Replace with es/no for HTTP Strict Transport Policy
+var lblPopup2 = "No"; //Replace with yes/no for HTTP Strict Transport Policy
 var lblPopup3 = "No"; //Replace with yes/no for HttpOnly and Secure Cookies
 var lblPopup4 = "No"; //Replace with yes/no for Anticlickjacking headers (X-Frame-Options)
 var lblPopup5 = "No"; //Replace with yes/no for Nonces in web forms
@@ -86,7 +86,7 @@ function addUrlsTable(data) {
 	    }
 	    if(data.resultObjects[index].noncesEnabled) {
 	    	lblPopup5="Yes";
-	    	document.getElementById('infoPopup5').innerHTML = "Nonces in web forms";
+	    	document.getElementById('infoPopup5').innerHTML = '<pre>' + data.resultObjects[index].noncesDetails.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</pre>';
 	    	countNonces++;
 	    } else {
 	    	lblPopup5 = "No";
