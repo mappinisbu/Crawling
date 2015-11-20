@@ -90,6 +90,7 @@ function addUrlsTable(data) {
 	    	countNonces++;
 	    } else {
 	    	lblPopup5 = "No";
+	    	document.getElementById('infoPopup5').innerHTML = '<pre>' + data.resultObjects[index].noncesDetails.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</pre>';
 	    }
 	    
 	    $('#tableBody').append('<tr><td>'+jsUrlName+'</td><td>'+aPopup1+lblPopup1+'</a></td><td>'+aPopup2+lblPopup2+'</a></td><td>'+aPopup3+lblPopup3+

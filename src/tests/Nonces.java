@@ -48,20 +48,42 @@ public class Nonces {
 			if(!isFormNonceEnabled && isPageNonceEnabled)
 			{
 				isPageNonceEnabled = false;
+				String formName = element.attr("name");
+				details = details + (formName.isEmpty()?"The form":"the form :" + formName )+ " has no nonce enabled. \n";
+
 			}
 
 		}
 		
 		if(!containsFormElements)
+		{
 			isPageNonceEnabled = false;
+			details = details + "No form elements have been found on this page. \n";
+		}
 		
+		Elements scriptElements = doc.getElementsByTag("script");
+		boolean isScriptNoncepresent = false;
+		for (org.jsoup.nodes.Element element : scriptElements)
+		{
+		    String nonce = element.attr("nonce");
+		    if(nonce != null && !nonce.isEmpty())
+		    {
+		    	isScriptNoncepresent = true;
+		    }
+		}
+		
+		if(isScriptNoncepresent)
+			details = details + " The script nonce is present.\n";
+		else
+			details = details + " The script nonce is absent.\n";
+
 	    resultObj.setNoncesEnabled(isPageNonceEnabled);
 	    resultObj.setNoncesDetails(details);
 		
 	}
 	
 	private static boolean isNonce(String inputValue) {
-		String patt = "[a-zA-Z0-9,=,+,/]{22,40}";
+		String patt = "[a-zA-Z0-9,=,+,/,-,_,!,.,~,:]{22,40}";
 		Pattern r = Pattern.compile(patt);
 		Matcher match = r.matcher(inputValue);
 		return match.find();
