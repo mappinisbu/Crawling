@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicIntegerArray;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -99,6 +101,7 @@ public class PageCrawler implements Runnable{
 						urlobj = new URL(url);
 						System.out.println("Domain = "+ urlobj.getHost());
 						URLConnection conn = urlobj.openConnection();
+						conn.setRequestProperty("Accept", "text/plain");
 						InputStreamReader rd = new InputStreamReader(conn.getInputStream());
 						BufferedReader br = new BufferedReader(rd);
 						String rawHTML = getStringFromBufferedReader(br);
@@ -150,7 +153,6 @@ public class PageCrawler implements Runnable{
 					} catch (Exception e) {
 						
 						e.printStackTrace();
-						return;
 					}
 					
 				}
