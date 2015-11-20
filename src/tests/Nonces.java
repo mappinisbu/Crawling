@@ -83,8 +83,18 @@ public class Nonces {
 	}
 	
 	private static boolean isNonce(String inputValue) {
+		// check if input value is an url
+		if(isURL(inputValue))
+			return false;
 		String patt = "[a-zA-Z0-9,=,+,/,-,_,!,.,~,:]{22,40}";
 		Pattern r = Pattern.compile(patt);
+		Matcher match = r.matcher(inputValue);
+		return match.find();
+	}
+
+	private static boolean isURL(String inputValue) {
+		String urlPatt = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+		Pattern r = Pattern.compile(urlPatt);
 		Matcher match = r.matcher(inputValue);
 		return match.find();
 	}
