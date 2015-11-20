@@ -101,7 +101,7 @@ public class PageCrawler implements Runnable{
 						urlobj = new URL(url);
 						System.out.println("Domain = "+ urlobj.getHost());
 						URLConnection conn = urlobj.openConnection();
-						conn.setRequestProperty("Accept", "text/plain");
+						conn.setRequestProperty("Accept", "application/xml,application/xhtml+xml,text/html,text/plain,*/*");
 						InputStreamReader rd = new InputStreamReader(conn.getInputStream());
 						BufferedReader br = new BufferedReader(rd);
 						String rawHTML = getStringFromBufferedReader(br);
