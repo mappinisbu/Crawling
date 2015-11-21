@@ -20,8 +20,8 @@ public class Nonces {
 			Result resultObj) {
 
 		Document doc = Jsoup.parse(rawHTML);
-		boolean isPageNonceEnabled = true;
 		boolean containsFormElements = false;
+		boolean containsAtleastoneFormNonce = false;
 		String details = "";
 		
 		Elements elements = doc.body().select("form");
@@ -40,16 +40,17 @@ public class Nonces {
 					if(isNonce(felem.attr("value")))
 					{
 						isFormNonceEnabled = true;
-						details = details + felem.toString() + "\n";
+						containsAtleastoneFormNonce = true;
+						String formName = element.attr("id");
+						details = details + (formName.isEmpty()?"A form":"the form :" + formName )+ " has nonce: " + felem.attr("value") + "\n";
 					}
 				}
 			}
 			
-			if(!isFormNonceEnabled && isPageNonceEnabled)
+			if(!isFormNonceEnabled)
 			{
-				isPageNonceEnabled = false;
-				String formName = element.attr("name");
-				details = details + (formName.isEmpty()?"The form":"the form :" + formName )+ " has no nonce enabled. \n";
+				String formName = element.attr("id");
+				details = details + (formName.isEmpty()?"A form":"the form :" + formName )+ " may not have a nonce enabled. \n";
 
 			}
 
@@ -57,8 +58,12 @@ public class Nonces {
 		
 		if(!containsFormElements)
 		{
-			isPageNonceEnabled = false;
+			resultObj.setNoncesEnabled(true);
 			details = details + "No form elements have been found on this page. \n";
+		}
+		else
+		{
+			resultObj.setNoncesEnabled(containsAtleastoneFormNonce);
 		}
 		
 		Elements scriptElements = doc.getElementsByTag("script");
@@ -73,11 +78,11 @@ public class Nonces {
 		}
 		
 		if(isScriptNoncepresent)
-			details = details + " The script nonce is present.\n";
+			details = details + "The script nonce is present.\n";
 		else
-			details = details + " The script nonce is absent.\n";
+			details = details + "The script nonce is absent.\n";
 
-	    resultObj.setNoncesEnabled(isPageNonceEnabled);
+	    
 	    resultObj.setNoncesDetails(details);
 		
 	}
