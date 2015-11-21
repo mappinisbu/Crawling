@@ -155,13 +155,24 @@ td {
 }
 
 #divResultsData {
-	padding: 0px 15px 0px 15px;
     position: absolute;
     bottom: 0px;
-    margin-bottom: 15px;
     height: 50%;
+    background-color: #D8D8D8;
+    width: 25%;
 }
 
 #tableResults td {
 	text-align: left;
+}
+
+#totalSecureUrls {
+	padding: 15px 15px 0px 15px;
+    height: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+
+#divTableResults {
+	padding: 0px 15px 0px 15px;
 }

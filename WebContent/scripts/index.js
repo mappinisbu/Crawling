@@ -150,15 +150,15 @@ function addUrlsTable(data) {
 function showResultData() {
 
 	//Add percentages to the results data table
-	document.getElementById('resultSecureUrls').innerHTML = "Fully Secure Urls: " + ( (countSecure/numberOfUrls) * 100 ).toString() + " %";
-	document.getElementById('resultDataCsp').innerHTML = nameCsp + ": " + ( (countCsp/numberOfUrls) * 100 ).toString() + " %";
-	document.getElementById('resultDataStrict').innerHTML = nameStrict + ": " + ( (countStrict/numberOfUrls) * 100 ).toString() + " %";
-	document.getElementById('resultDataHttpOnly').innerHTML = nameHttpOnly + ": " + ( (countHttpOnly/numberOfUrls) * 100 ).toString() + " %";
-	document.getElementById('resultDataAntiClick').innerHTML = nameAntiClick + ": " + ( (countAntiClick/numberOfUrls) * 100 ).toString() + " %";
-	document.getElementById('resultDataNonces').innerHTML = nameNonces + ": " + ( (countNonces/numberOfUrls) * 100 ).toString() + " %";
+	document.getElementById('securePercent').innerHTML = "Fully Secure Urls: " + ( Math.round((countSecure/numberOfUrls) * 100) ).toString() + " %";
+	document.getElementById('resultDataCsp').innerHTML = nameCsp + ": " + ( Math.round((countCsp/numberOfUrls) * 100) ).toString() + " %";
+	document.getElementById('resultDataStrict').innerHTML = nameStrict + ": " + ( Math.round((countStrict/numberOfUrls) * 100) ).toString() + " %";
+	document.getElementById('resultDataHttpOnly').innerHTML = nameHttpOnly + ": " + ( Math.round((countHttpOnly/numberOfUrls) * 100) ).toString() + " %";
+	document.getElementById('resultDataAntiClick').innerHTML = nameAntiClick + ": " + ( Math.round((countAntiClick/numberOfUrls) * 100) ).toString() + " %";
+	document.getElementById('resultDataNonces').innerHTML = nameNonces + ": " + ( Math.round((countNonces/numberOfUrls) * 100) ).toString() + " %";
 
 	//Color the data based on percentage threshold (50%)
-	resultDataColoring(countSecure/numberOfUrls, "resultSecureUrls");
+	resultDataColoring(countSecure/numberOfUrls, "securePercent");
 	resultDataColoring(countCsp/numberOfUrls, "resultDataCsp");
 	resultDataColoring(countStrict/numberOfUrls, "resultDataStrict");
 	resultDataColoring(countHttpOnly/numberOfUrls, "resultDataHttpOnly");
@@ -235,6 +235,9 @@ function clearUrls() {
 			
 			//Clear popup contents
 			document.getElementById('popupList').innerHTML = "";
+			
+			//Clear Fully Secure Urls text
+			document.getElementById('securePercent').innerHTML = "";
 		  },
 		  error: function() {
 			  alert("error");
