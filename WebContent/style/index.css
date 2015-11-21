@@ -15,7 +15,7 @@ html,body {
 }
 
 #groupMain {
-	padding: 10px 15px 0px 15px;
+	height: 100%;
 }
 
 #tableCrawl {
@@ -100,15 +100,20 @@ td {
 
 .inputDiv {
 	height: 50px;
+    width: 100%;
+    position: relative;
 }
 
 #rightDomain, #rightNumber {
-	padding-left: 10px;
-	width: 175px;
+    width: 75%;
+    position: absolute;
+    right: 0px;
 }
 
 #leftDomain, #leftNumber {
-	width: 70px;
+	width: 25%;
+    position: absolute;
+    left: 0px;
 }
 
 #tdUrl {
@@ -175,4 +180,22 @@ td {
 
 #divTableResults {
 	padding: 0px 15px 0px 15px;
+}
+
+#headerProject {
+	width: 24%;
+    font-size: 28px;
+    padding-left: 1%;
+}
+
+#groupMembers {
+	width: 70%;
+    padding-left: 5%;
+}
+
+#headerProject, #groupMembers {
+	float: left;
+	position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }

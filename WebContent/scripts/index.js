@@ -50,7 +50,6 @@ $( document ).ready(function() {
     
 	document.getElementById('domainName').value = "https://paypal.com";
 	document.getElementById('numberPages').value = "2";
-	document.getElementById('btnResults').style.visibility = "hidden";
 	document.getElementById('btnClear').style.visibility = "hidden";
 	document.getElementById('loader').style.visibility = "hidden";
 	document.getElementById('tableResults').style.visibility = "hidden";
@@ -59,10 +58,6 @@ $( document ).ready(function() {
 		document.getElementById('btnSubmit').disabled = true;
 	    updateInput();
 	    document.getElementById('loader').style.visibility = "visible";
-	});
-	
-	$('#btnResults').click(function(){
-		getUrls();
 	});
 	
 	$('#btnClear').click(function(){
@@ -183,7 +178,6 @@ function getUrls() {
 		  success: function(data) {
 			  addUrlsTable(data);
 			  showResultData();
-			  document.getElementById('btnResults').style.visibility = "hidden";
 			  document.getElementById('btnClear').style.visibility = "visible";
 			  document.getElementById('tableResults').style.visibility = "visible";
 		  },
@@ -206,7 +200,7 @@ function updateInput() {
 			  document.getElementById('loader').style.visibility = "hidden";
 			  document.getElementById('btnSubmit').style.visibility = "hidden";
 			  document.getElementById('btnSubmit').disabled = false;
-			  document.getElementById('btnResults').style.visibility = "visible";
+			  getUrls();
 		  },
 		  error: function() {
 			  alert("error");
