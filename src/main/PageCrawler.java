@@ -282,52 +282,7 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 	
 	
 	
-	public static int[] examineCookies(Map<String, List<String>> urlRespMap ) {
-		
-		int cookieCount=0,secureCookieCount=0,httpOnlyCookieCount=0;
-		List<String> cookieContent = null;
-		/*
-		for (Map.Entry<String, List<String>> mapEntry: urlRespMap.entrySet()){
-			//System.out.println(mapEntry.getKey() + " : " + mapEntry.getValue());
-			if (mapEntry.getKey()!=null){
-				if (mapEntry.getKey().equals("Set-Cookie")){
-					cookieContent = mapEntry.getValue();
-					cookieCount=cookieContent.size();
-				}
-			}
-			
-		}
-		*/
-		
-		cookieContent = urlRespMap.get("Set-Cookie");
-		if (cookieContent != null) 
-			cookieCount=cookieContent.size();
-		
-	
-		if (cookieCount>0){
-			System.out.println("----------Cookie values:-----------");
-			for(String str: cookieContent){
-				System.out.println(str);
-				if(str.contains("HttpOnly")) httpOnlyCookieCount++;
-				if(str.contains("Secure")) secureCookieCount++;
-			}
-			
-			System.out.println("----------End of cookies-----------");
-		}
-		
-		
-		System.out.println("Total number of cookies= "+cookieCount );
-		System.out.println("Total number of secure cookies= "+secureCookieCount );
-		System.out.println("Total number of HttpOnly cookies= "+httpOnlyCookieCount );
-		
-		int[] cookieCounts=new int[3];
-		cookieCounts[0]=cookieCount ;
-		cookieCounts[1]=secureCookieCount ;
-		cookieCounts[2]=httpOnlyCookieCount ;
-		
-		return cookieCounts;
-	}
-	
+
 	
 
 }

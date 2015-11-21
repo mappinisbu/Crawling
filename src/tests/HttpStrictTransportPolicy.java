@@ -18,11 +18,16 @@ public class HttpStrictTransportPolicy {
 		if(urlRespMap.containsKey("Strict-Transport-Security")) {
 			System.out.print("Found\n");
 			strictEnabled = true;
-		    resultObj.setStrictEnabled(true); 
+		}else{
+			strictEnabled = false;
 		}
 		
 		resultObj.setStrictEnabled(strictEnabled); 
 		details = ResultHelper.addDetails(urlRespMap, resultObj, "Strict-Transport-Security");
+		
+		if (details.length()==0)
+			details="Strict Transport Security header not found!";
+		
 		resultObj.setStrictDetails(details);
 	}
 }

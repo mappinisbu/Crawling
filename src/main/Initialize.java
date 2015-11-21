@@ -24,7 +24,7 @@ public class Initialize {
 		Result resultObj = new Result();
 		AnticlickjackingHeaders.StartTest(urlRespMap,resultObj);
 		ContentSecurityPolicy.StartTest(urlRespMap,resultObj);
-		HttpOnlySecureCookies.StartTest(urlRespMap,resultObj);
+		HttpOnlySecureCookies.StartTest(urlRespMap,rawHTML,resultObj);
 		HttpStrictTransportPolicy.StartTest(urlRespMap,resultObj);
 		Nonces.StartTest(url, urlRespMap,rawHTML, resultObj);
 		

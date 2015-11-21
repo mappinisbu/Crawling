@@ -18,6 +18,8 @@ public class AnticlickjackingHeaders {
 	public static void StartTest(Map<String, List<String>> urlRespMap, Result resultObj) {
 		
 		System.out.print("Anti-Click-Jacking header: ");
+		antiClickEnabled = false;
+		
 		if(urlRespMap.containsKey("X-Frame-Options") || urlRespMap.containsKey("X-FRAME-OPTIONS") ){   
 			xframe = urlRespMap.get("X-Frame-Options");
 			if (xframe == null) 
@@ -34,6 +36,10 @@ public class AnticlickjackingHeaders {
 		
 		resultObj.setAntiClickEnabled(antiClickEnabled); 
 		details = ResultHelper.addDetails(urlRespMap, resultObj, "X-Frame-Options");
+		
+		if (details.length()==0)
+			details="X-Frame-Options header not found!";
+		
 		resultObj.setAntiClickDetails(details);
 	}
 }
