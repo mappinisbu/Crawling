@@ -1,13 +1,27 @@
-var aPopup1 = '<a style="position:inherit;" href="#infoPopup-1-';
-var aPopup11 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
-var aPopup2 = '<a style="position:inherit;" href="#infoPopup-2-';
+var redbg='#DC657D';
+var greenbg='#65DC6B';
+
+var aPopup10 = '<a style="position:inherit;background-color:';
+var aPopup11 = ';" href="#infoPopup-1-';
+var aPopup12 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
+
+var aPopup20 = '<a style="position:inherit;background-color:';
+var aPopup21 = ';" href="#infoPopup-2-';
 var aPopup22 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
-var aPopup3 = '<a style="position:inherit;" href="#infoPopup-3-';
-var aPopup33 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
-var aPopup4 = '<a style="position:inherit;" href="#infoPopup-4-';
-var aPopup44 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
-var aPopup5 = '<a style="position:inherit;" href="#infoPopup-5-';
-var aPopup55 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
+
+var aPopup30 = '<a style="position:inherit;background-color:';
+var aPopup31 = ';" href="#infoPopup-3-';
+var aPopup32 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
+
+var aPopup40 = '<a style="position:inherit;background-color:';
+var aPopup41 = ';" href="#infoPopup-4-';
+var aPopup42 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
+
+var aPopup50 = '<a style="position:inherit;background-color:';
+var aPopup51 = ';" href="#infoPopup-5-';
+var aPopup52 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
+
+
 var nameCsp = "Content-Security Policy";
 var nameStrict = "HTTP Strict Transport Policy";
 var nameHttpOnly = "HttpOnly and Secure Cookies";
@@ -19,6 +33,11 @@ var lblPopup2 = "No"; //Replace with yes/no for HTTP Strict Transport Policy
 var lblPopup3 = "No"; //Replace with yes/no for HttpOnly and Secure Cookies
 var lblPopup4 = "No"; //Replace with yes/no for Anticlickjacking headers (X-Frame-Options)
 var lblPopup5 = "No"; //Replace with yes/no for Nonces in web forms
+var bg1=redbg;
+var bg2=redbg;
+var bg3=redbg;
+var bg4=redbg;
+var bg5=redbg;
 var countCsp = 0;
 var countStrict = 0;
 var countHttpOnly = 0;
@@ -71,46 +90,56 @@ function addUrlsTable(data) {
 		$('#infoPopup-5-'+index).popup();
 		
 		jsUrlName = data.resultObjects[index].urlName;
-	    
+		document.getElementById('infoPopup-1-'+index).innerHTML = data.resultObjects[index].cspDetails;
+		document.getElementById('infoPopup-2-'+index).innerHTML = data.resultObjects[index].strictDetails;
+		document.getElementById('infoPopup-3-'+index).innerHTML = data.resultObjects[index].httpOnlyDetails;
+		document.getElementById('infoPopup-4-'+index).innerHTML = data.resultObjects[index].antiClickDetails;
+		document.getElementById('infoPopup-5-'+index).innerHTML = '<pre>' + data.resultObjects[index].noncesDetails.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</pre>';
+		
 	    if(data.resultObjects[index].cspEnabled) {
 	    	lblPopup1="Yes";
-	    	document.getElementById('infoPopup-1-'+index).innerHTML = data.resultObjects[index].cspDetails;
+	    	bg1=greenbg;
 	    	countCsp++;
 	    } else {
 	    	lblPopup1 = "No";
+	    	bg1=redbg;
 	    }
 	    if(data.resultObjects[index].strictEnabled) {
 	    	lblPopup2="Yes";
-	    	document.getElementById('infoPopup-2-'+index).innerHTML = data.resultObjects[index].strictDetails;
+	    	bg2=greenbg;
 	    	countStrict++;
 	    } else {
 	    	lblPopup2 = "No";
+	    	bg2=redbg;
 	    }
 	    if(data.resultObjects[index].httpOnlyEnabled) {
 	    	lblPopup3="Yes";
-	    	document.getElementById('infoPopup-3-'+index).innerHTML = data.resultObjects[index].httpOnlyDetails;
+	    	bg3=greenbg;
 	    	countHttpOnly++;
 	    } else {
 	    	lblPopup3 = "No";
+	    	bg3=redbg;
 	    }
 	    if(data.resultObjects[index].antiClickEnabled) {
 	    	lblPopup4="Yes";
-	    	document.getElementById('infoPopup-4-'+index).innerHTML = data.resultObjects[index].antiClickDetails;
+	    	bg4=greenbg;
 	    	countAntiClick++;
 	    } else {
 	    	lblPopup4 = "No";
+	    	bg4=redbg;
 	    }
 	    if(data.resultObjects[index].noncesEnabled) {
 	    	lblPopup5="Yes";
-	    	document.getElementById('infoPopup-5-'+index).innerHTML = '<pre>' + data.resultObjects[index].noncesDetails.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</pre>';
+	    	bg5=greenbg;
 	    	countNonces++;
 	    } else {
 	    	lblPopup5 = "No";
+	    	bg5=redbg;
 	    	//document.getElementById('infoPopup-5-'+index).innerHTML = '<pre>' + data.resultObjects[index].noncesDetails.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</pre>';
 	    }
 	    
-	    $('#tableBody').append('<tr><td>'+jsUrlName+'</td><td>'+aPopup1+index+aPopup11+lblPopup1+'</a></td><td>'+aPopup2+index+aPopup22+lblPopup2+'</a></td><td>'+aPopup3+index+aPopup33+lblPopup3+
-	    		'</a></td><td>'+aPopup4+index+aPopup44+lblPopup4+'</a></td><td>'+aPopup5+index+aPopup55+lblPopup5+'</a></td></tr>');
+	    $('#tableBody').append('<tr><td>'+jsUrlName+'</td><td>'+aPopup10+bg1+aPopup11+index+aPopup12+lblPopup1+'</a></td><td>'+aPopup20+bg2+aPopup21+index+aPopup22+lblPopup2+'</a></td><td>'+aPopup30+bg3+aPopup31+index+aPopup32+lblPopup3+
+	    		'</a></td><td>'+aPopup40+bg4+aPopup41+index+aPopup42+lblPopup4+'</a></td><td>'+aPopup50+bg5+aPopup51+index+aPopup52+lblPopup5+'</a></td></tr>');
 	    
 	    if (data.resultObjects[index].cspEnabled && data.resultObjects[index].strictEnabled && data.resultObjects[index].httpOnlyEnabled && data.resultObjects[index].antiClickEnabled && data.resultObjects[index].noncesEnabled) {
 	    	countSecure++;
