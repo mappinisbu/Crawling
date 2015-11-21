@@ -1,8 +1,13 @@
-var aPopup1 = '<a style="position:inherit;" href="#infoPopup1" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
-var aPopup2 = '<a style="position:inherit;" href="#infoPopup2" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
-var aPopup3 = '<a style="position:inherit;" href="#infoPopup3" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
-var aPopup4 = '<a style="position:inherit;" href="#infoPopup4" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
-var aPopup5 = '<a style="position:inherit;" href="#infoPopup5" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
+var aPopup1 = '<a style="position:inherit;" href="#infoPopup-1-';
+var aPopup11 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
+var aPopup2 = '<a style="position:inherit;" href="#infoPopup-2-';
+var aPopup22 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
+var aPopup3 = '<a style="position:inherit;" href="#infoPopup-3-';
+var aPopup33 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
+var aPopup4 = '<a style="position:inherit;" href="#infoPopup-4-';
+var aPopup44 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
+var aPopup5 = '<a style="position:inherit;" href="#infoPopup-5-';
+var aPopup55 = '" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" data-position-to="window">';
 var nameCsp = "Content-Security Policy";
 var nameStrict = "HTTP Strict Transport Policy";
 var nameHttpOnly = "HttpOnly and Secure Cookies";
@@ -54,47 +59,58 @@ function addUrlsTable(data) {
 	
 	for (var index = 0; index < data.resultObjects.length; index++) {
 		
+		$('#popupList').append('<div class="divPopup" data-role="popup" id="infoPopup-1-'+index+'"><p>Not Enabled</p></div>');
+		$('#infoPopup-1-'+index).popup();
+		$('#popupList').append('<div class="divPopup" data-role="popup" id="infoPopup-2-'+index+'"><p>Not Enabled</p></div>');
+		$('#infoPopup-2-'+index).popup();
+		$('#popupList').append('<div class="divPopup" data-role="popup" id="infoPopup-3-'+index+'"><p>Not Enabled</p></div>');
+		$('#infoPopup-3-'+index).popup();
+		$('#popupList').append('<div class="divPopup" data-role="popup" id="infoPopup-4-'+index+'"><p>Not Enabled</p></div>');
+		$('#infoPopup-4-'+index).popup();
+		$('#popupList').append('<div class="divPopup" data-role="popup" id="infoPopup-5-'+index+'"><p>Not Enabled</p></div>');
+		$('#infoPopup-5-'+index).popup();
+		
 		jsUrlName = data.resultObjects[index].urlName;
 	    
 	    if(data.resultObjects[index].cspEnabled) {
 	    	lblPopup1="Yes";
-	    	document.getElementById('infoPopup1').innerHTML = data.resultObjects[index].cspDetails;
+	    	document.getElementById('infoPopup-1-'+index).innerHTML = data.resultObjects[index].cspDetails;
 	    	countCsp++;
 	    } else {
 	    	lblPopup1 = "No";
 	    }
 	    if(data.resultObjects[index].strictEnabled) {
 	    	lblPopup2="Yes";
-	    	document.getElementById('infoPopup2').innerHTML = data.resultObjects[index].strictDetails;
+	    	document.getElementById('infoPopup-2-'+index).innerHTML = data.resultObjects[index].strictDetails;
 	    	countStrict++;
 	    } else {
 	    	lblPopup2 = "No";
 	    }
 	    if(data.resultObjects[index].httpOnlyEnabled) {
 	    	lblPopup3="Yes";
-	    	document.getElementById('infoPopup3').innerHTML = data.resultObjects[index].httpOnlyDetails;
+	    	document.getElementById('infoPopup-3-'+index).innerHTML = data.resultObjects[index].httpOnlyDetails;
 	    	countHttpOnly++;
 	    } else {
 	    	lblPopup3 = "No";
 	    }
 	    if(data.resultObjects[index].antiClickEnabled) {
 	    	lblPopup4="Yes";
-	    	document.getElementById('infoPopup4').innerHTML = data.resultObjects[index].antiClickDetails;
+	    	document.getElementById('infoPopup-4-'+index).innerHTML = data.resultObjects[index].antiClickDetails;
 	    	countAntiClick++;
 	    } else {
 	    	lblPopup4 = "No";
 	    }
 	    if(data.resultObjects[index].noncesEnabled) {
 	    	lblPopup5="Yes";
-	    	document.getElementById('infoPopup5').innerHTML = '<pre>' + data.resultObjects[index].noncesDetails.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</pre>';
+	    	document.getElementById('infoPopup-5-'+index).innerHTML = '<pre>' + data.resultObjects[index].noncesDetails.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</pre>';
 	    	countNonces++;
 	    } else {
 	    	lblPopup5 = "No";
-	    	document.getElementById('infoPopup5').innerHTML = '<pre>' + data.resultObjects[index].noncesDetails.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</pre>';
+	    	//document.getElementById('infoPopup-5-'+index).innerHTML = '<pre>' + data.resultObjects[index].noncesDetails.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</pre>';
 	    }
 	    
-	    $('#tableBody').append('<tr><td>'+jsUrlName+'</td><td>'+aPopup1+lblPopup1+'</a></td><td>'+aPopup2+lblPopup2+'</a></td><td>'+aPopup3+lblPopup3+
-	    		'</a></td><td>'+aPopup4+lblPopup4+'</a></td><td>'+aPopup5+lblPopup5+'</a></td></tr>');
+	    $('#tableBody').append('<tr><td>'+jsUrlName+'</td><td>'+aPopup1+index+aPopup11+lblPopup1+'</a></td><td>'+aPopup2+index+aPopup22+lblPopup2+'</a></td><td>'+aPopup3+index+aPopup33+lblPopup3+
+	    		'</a></td><td>'+aPopup4+index+aPopup44+lblPopup4+'</a></td><td>'+aPopup5+index+aPopup55+lblPopup5+'</a></td></tr>');
 	    
 	    if (data.resultObjects[index].cspEnabled && data.resultObjects[index].strictEnabled && data.resultObjects[index].httpOnlyEnabled && data.resultObjects[index].antiClickEnabled && data.resultObjects[index].noncesEnabled) {
 	    	countSecure++;
@@ -187,6 +203,9 @@ function clearUrls() {
 			countNonces = 0;
 			countSecure = 0;
 			numberOfUrls = 0;
+			
+			//Clear popup contents
+			document.getElementById('popupList').innerHTML = "";
 		  },
 		  error: function() {
 			  alert("error");
