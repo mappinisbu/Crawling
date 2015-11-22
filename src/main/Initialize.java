@@ -4,6 +4,7 @@ import main.PageCrawler;
 import objects.Result;
 import tests.*;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +21,11 @@ public class Initialize {
 		//StartSecurityChecks();
 	}
 	
-	public static Result StartSecurityChecks(String url, Map<String, List<String>> urlRespMap, String rawHTML) {
+	public static Result StartSecurityChecks(String url,URL urlobj, Map<String, List<String>> urlRespMap, String rawHTML) {
 		Result resultObj = new Result();
 		AnticlickjackingHeaders.StartTest(urlRespMap,resultObj);
 		ContentSecurityPolicy.StartTest(urlRespMap,resultObj);
-		HttpOnlySecureCookies.StartTest(urlRespMap,rawHTML,resultObj);
+		HttpOnlySecureCookies.StartTest(urlobj,urlRespMap,rawHTML,resultObj);
 		HttpStrictTransportPolicy.StartTest(urlRespMap,resultObj);
 		Nonces.StartTest(url, urlRespMap,rawHTML, resultObj);
 		

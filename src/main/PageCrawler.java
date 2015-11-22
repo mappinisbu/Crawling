@@ -24,6 +24,9 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
+
 import java.net.MalformedURLException;
 
 //import org.jsoup.Connection;
@@ -112,6 +115,9 @@ public class PageCrawler implements Runnable{
 					    kit.read(new InputStreamReader(new ByteArrayInputStream(rawHTML.getBytes())), doc, 0);
 					    
 					    // Also read into a jsoup object for parsing
+					    Response res=Jsoup.connect(url).execute();
+					    Map<String, String> cookies = res.cookies();
+					    
 					   
 						/*
 						String contentType= conn.getContentType();
@@ -144,7 +150,7 @@ public class PageCrawler implements Runnable{
 						
 						printHeaders(urlRespMap);
 										
-						Result resultObj=Initialize.StartSecurityChecks(url, urlRespMap, rawHTML);
+						Result resultObj=Initialize.StartSecurityChecks(url, urlobj, urlRespMap, rawHTML);
 						resultObj.setUrlName(url);
 						if(resultSet.size()<maxPage)
 							resultSet.add(resultObj);
@@ -168,7 +174,7 @@ public class PageCrawler implements Runnable{
         flag = false;
     }
 
-	private static String getStringFromBufferedReader(BufferedReader br) {
+	public static String getStringFromBufferedReader(BufferedReader br) {
 		StringBuilder sb = new StringBuilder();
 		String line;
 		try {
@@ -246,6 +252,19 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 			}else
 				return hyperlink;
 			
+		}
+		
+		else if (hyperlink.startsWith("../")){
+			System.out.println("Resolving link beginning with ../");
+			String originalURL = urlobj.toString();
+			int indexOfLastSlash=originalURL.lastIndexOf("/", originalURL.length()-1);
+			System.out.println("last slash index= "+indexOfLastSlash);
+			int indexOfSecondLastSlash=originalURL.lastIndexOf("/", indexOfLastSlash-1);
+			System.out.println("Second last slash index= "+indexOfSecondLastSlash);
+			if (indexOfSecondLastSlash>-1)
+				return originalURL.substring(0,indexOfSecondLastSlash)+hyperlink.substring(2);
+			else
+				return null;
 		}
 			
 		else{
