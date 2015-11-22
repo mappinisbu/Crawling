@@ -97,6 +97,8 @@ public class HttpOnlySecureCookies {
 		cookieContent = urlRespMap.get("Set-Cookie");
 		if (cookieContent==null)
 			cookieContent = urlRespMap.get("SET-COOKIE");
+		if (cookieContent==null)
+			cookieContent = urlRespMap.get("Set-cookie");
 		
 		if (cookieContent != null) 
 			cookieCount=cookieContent.size();
