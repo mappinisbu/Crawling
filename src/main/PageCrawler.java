@@ -99,7 +99,7 @@ public class PageCrawler implements Runnable{
 					System.out.println("PageCrawler "+threadNum+": "+"Crawling " + url);
 					
 					try {
-						
+						int numUrlAdded=0;
 						//urlConn = Jsoup.connect(url);
 						//doc = urlConn.get();
 						
@@ -128,7 +128,7 @@ public class PageCrawler implements Runnable{
 						
 					    
 					    HTMLDocument.Iterator i = doc.getIterator(HTML.Tag.A);
-						int numUrlAdded=0;
+						
 						while (i.isValid()){
 							SimpleAttributeSet saSet = (SimpleAttributeSet) i.getAttributes();
 							String hyperlink = (String) saSet.getAttribute(HTML.Attribute.HREF);
@@ -144,7 +144,7 @@ public class PageCrawler implements Runnable{
 						}
 						
 						//******Write the number of pages added to the array******
-						array.set(threadNum,numPagesAdded);
+						array.set(threadNum,numUrlAdded);
 					    
 					    
 					    
