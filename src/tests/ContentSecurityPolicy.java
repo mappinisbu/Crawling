@@ -10,10 +10,12 @@ import objects.Result;
 
 public class ContentSecurityPolicy {
 
-	private static boolean cspEnabled = false;
-	private static String details = "Not found";
 	
 	public static void StartTest(Map<String, List<String>> urlRespMap, Result resultObj) {
+		
+
+		boolean cspEnabled = false;
+		String details = "Not found";
 		
 		System.out.print("Content-Security-Policy header: ");
 		

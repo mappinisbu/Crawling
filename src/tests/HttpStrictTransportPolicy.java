@@ -10,10 +10,12 @@ import objects.Result;
 
 public class HttpStrictTransportPolicy {
 	
-	private static boolean strictEnabled = false;
-	private static String details = "Not found";
 	
 	public static void StartTest(Map<String, List<String>> urlRespMap, Result resultObj) {
+
+		boolean strictEnabled = false;
+		String details = "Not found";
+		
 		System.out.print("Strict-Transport-Security header: ");
 		if(urlRespMap.containsKey("Strict-Transport-Security")) {
 			System.out.print("Found\n");

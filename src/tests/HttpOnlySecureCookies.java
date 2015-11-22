@@ -35,25 +35,15 @@ import main.PageCrawler;
 import objects.Result;
 
 public class HttpOnlySecureCookies {
-	public static StringBuilder details;
+
 	
 	public static void StartTest(URL urlobj, Map<String, List<String>> urlRespMap, String rawHTML, Result resultObj) {
 		
-		details=new StringBuilder();
-		int[] cookieCounts= examineHTMLCookies(urlRespMap);
+		StringBuilder details=new StringBuilder();
+		int[] cookieCounts= examineHTMLCookies(urlRespMap, details);
 		int cookieCount = cookieCounts[0];
 		int secureCookieCount = cookieCounts[1];
 		int httpOnlyCookieCount = cookieCounts[2];
-		
-		if(cookieCount>0 && secureCookieCount >0 && httpOnlyCookieCount > 0){
-			System.out.print("HttpOnly / secure cookies: ");
-			System.out.print("Found\n");
-		    resultObj.setHttpOnlyEnabled(true); 
-		}else{
-			System.out.print("HttpOnly / secure cookies: ");
-			System.out.print("Not found!\n");
-			resultObj.setHttpOnlyEnabled(false);
-		}	
 		
 		details.append("Cookies set in HTML response header:<br>");
 		details.append("Total Cookies = "+ cookieCount +"<br>"+
@@ -62,15 +52,32 @@ public class HttpOnlySecureCookies {
 		details.append("-------------------------------------<br>");
 		
 		int[] scriptCookieCounts= examineScriptCookies(rawHTML,urlobj);
-		details.append("Inline Javascript Cookies:<br>");
+		details.append("Javascript Cookies:<br>");
 		details.append("Total Cookies = "+ scriptCookieCounts[0] +"<br>"+
 					   "Secure cookies = "+scriptCookieCounts[1]+"<br>");
+		
+		cookieCount+=scriptCookieCounts[0];
+		secureCookieCount+=scriptCookieCounts[1];
+		
+		if(cookieCount>0 && secureCookieCount >0 && httpOnlyCookieCount > 0){
+			System.out.print("HttpOnly / secure cookies: ");
+			System.out.print("Found\n");
+		    resultObj.setHttpOnlyEnabled(true); 
+		}else if(cookieCount==0){
+			resultObj.setHttpOnlyEnabled(true);
+		}else{
+			System.out.print("HttpOnly / secure cookies: ");
+			System.out.print("Not found!\n");
+			resultObj.setHttpOnlyEnabled(false);
+		}	
+		
+	
 			
 		resultObj.setHttpOnlyDetails(details.toString());
 		
 	}	
 	
-	public static int[] examineHTMLCookies(Map<String, List<String>> urlRespMap ) {
+	public static int[] examineHTMLCookies(Map<String, List<String>> urlRespMap, StringBuilder details ) {
 		
 		int cookieCount=0,secureCookieCount=0,httpOnlyCookieCount=0;
 		List<String> cookieContent = null;
@@ -99,8 +106,8 @@ public class HttpOnlySecureCookies {
 			details.append("----------Cookie values:-----------<br>");
 			for(String str: cookieContent){
 				details.append(str+"<br>");
-				if(str.contains("HttpOnly")) httpOnlyCookieCount++;
-				if(str.contains("Secure")) secureCookieCount++;
+				if(str.contains("HttpOnly")||str.contains("httponly")) httpOnlyCookieCount++;
+				if(str.contains("Secure")||str.contains("secure")) secureCookieCount++;
 			}
 			
 			details.append("----------End of cookies-----------<br>");

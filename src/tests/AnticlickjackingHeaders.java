@@ -11,11 +11,13 @@ import objects.Result;
 
 public class AnticlickjackingHeaders {
 
-	private static List<String> xframe = null;
-	private static boolean antiClickEnabled = false;
-	private static String details = "Not found";
 	
 	public static void StartTest(Map<String, List<String>> urlRespMap, Result resultObj) {
+		
+
+		List<String> xframe = null;
+		boolean antiClickEnabled = false;
+		String details = "Not found";
 		
 		System.out.print("Anti-Click-Jacking header: ");
 		antiClickEnabled = false;

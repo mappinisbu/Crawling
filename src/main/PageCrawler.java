@@ -211,16 +211,13 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 		if (hyperlink.charAt(0)=='#') return null;
 		
 		
-		
-		//process relative links
-		if (hyperlink.charAt(0)=='/'){
-			return urlobj.getProtocol()+"://"+urlobj.getAuthority()+hyperlink;
-		}
-		
-		
-		
-		
 		if ( hyperlink.startsWith("http://")|| hyperlink.startsWith("https://")){
+			
+
+			if (hyperlink.endsWith(".js"))
+				return hyperlink;  //domain check skipped for js files
+			
+			
 			URL domainURL = null;
 			try {
 				domainURL = new URL(Controller.domainName);
@@ -246,7 +243,8 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 				crawledUrlDomain = crawledUrlDomain.substring(4);
 			}
 			
-			if(!givenDomain.equals(crawledUrlDomain)){
+			
+			if(!givenDomain.equals(crawledUrlDomain) ){   
 				System.out.println("###################different host: "+domainURL.getHost()+"   "+crawledURL.getHost());
 				return null;
 			}else
@@ -266,7 +264,16 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 			else
 				return null;
 		}
-			
+		
+		else if (hyperlink.startsWith("//")){  //protocol relative URL
+			System.out.println("Resolving link beginning with //");
+			return filterLinks(urlobj.getProtocol()+":"+hyperlink,urlobj);  //could point to external domain, so pass again to filterLinks()
+		}
+		
+		else if (hyperlink.charAt(0)=='/'){  //process relative links
+					return urlobj.getProtocol()+"://"+urlobj.getAuthority()+hyperlink;
+		}
+		
 		else{
 			String originalURL = urlobj.toString();
 			boolean endsWithSlash=false;
