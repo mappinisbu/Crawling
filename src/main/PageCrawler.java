@@ -304,9 +304,12 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 			
 			if(endsWithSlash)
 				return originalURL+hyperlink;
-			else{
-				indexOfLastSlash=originalURL.lastIndexOf("/", originalURL.length()-1);
+			
+			indexOfLastSlash=originalURL.lastIndexOf("/", originalURL.length()-1);
+			if (indexOfLastSlash>6) // http://
 				return originalURL.substring(0,indexOfLastSlash)+"/"+hyperlink;
+			else{
+				return originalURL+"/"+hyperlink;
 			}
 				
 			
