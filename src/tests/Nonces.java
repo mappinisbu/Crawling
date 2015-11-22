@@ -2,11 +2,15 @@ package tests;
 
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 //import org.jsoup.Connection.Response;
@@ -24,7 +28,14 @@ public class Nonces {
 		boolean containsAtleastoneFormNonce = false;
 		String details = "";
 		
-		Elements elements = doc.body().select("form");
+		Element htmlBody = doc.body();
+		if(htmlBody == null)
+		{
+			resultObj.setNoncesEnabled(true);
+			details = details + "No form elements have been found on this page. \n";
+			return;
+		}
+		Elements elements = htmlBody.select("form");
 
 		for (org.jsoup.nodes.Element element : elements) 
 		{
@@ -50,7 +61,7 @@ public class Nonces {
 			if(!isFormNonceEnabled)
 			{
 				String formName = element.attr("id");
-				details = details + (formName.isEmpty()?"A form":"the form :" + formName )+ " may not have a nonce enabled. \n";
+				details = details + "No nonce found for " +(formName.isEmpty()?"a form":"the form :" + formName ) + "\n";
 
 			}
 
@@ -91,10 +102,40 @@ public class Nonces {
 		// check if input value is an url
 		if(isURL(inputValue))
 			return false;
+
+		// check if its a path
+		if(isPath(inputValue))
+			return false;
+		
+		if(!containsAtleastOneDigit(inputValue))
+		{
+			return false;
+		}
+		
 		String patt = "[a-zA-Z0-9,=,+,/,-,_,!,.,~,:]{22,40}";
 		Pattern r = Pattern.compile(patt);
 		Matcher match = r.matcher(inputValue);
 		return match.find();
+	}
+
+	private static boolean containsAtleastOneDigit(String inputValue) {
+		if (Pattern.compile("[0-9]").matcher(inputValue).find()) {
+	        return true;
+	    }
+		return false;
+	}
+
+	private static boolean isPath(String inputValue) {
+		if(inputValue.startsWith("/") || inputValue.startsWith("."))
+		{
+			return true;
+		}
+		StringTokenizer st = new StringTokenizer(inputValue, "/");
+		if(st.countTokens() >= 3)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	private static boolean isURL(String inputValue) {
