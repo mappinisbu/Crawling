@@ -109,7 +109,7 @@ public class Controller {
 			
 		}
 		
-		System.out.println("Crawling is finished. The number of pages crawled: "+urlSet.size());
+		System.out.println("Crawling is finished.");
 		//System.out.println("***************Controller terminating*****************");
 		
 		urls = new HashSet<String>(urlSet);

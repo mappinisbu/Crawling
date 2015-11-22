@@ -77,7 +77,7 @@ public class PageCrawler implements Runnable{
 		String url;
 		int count=1;
 		int numPagesAdded = 0;
-		while(urlsTraversed.size() < maxPage && flag == true){
+		while(resultSet.size() < maxPage && flag == true ){
 			
 			if(queue.size()>0){
 				url = queue.poll();
@@ -88,7 +88,7 @@ public class PageCrawler implements Runnable{
 						//return;
 					
 					
-					urlsTraversed.add(url);
+					
 					//System.out.println("Start crawling page "+url);
 					count++;
 					//Connection urlConn = null;
@@ -154,6 +154,8 @@ public class PageCrawler implements Runnable{
 										
 						Result resultObj=Initialize.StartSecurityChecks(url, urlobj, urlRespMap, rawHTML);
 						resultObj.setUrlName(url);
+						urlsTraversed.add(url);
+						
 						if(resultSet.size()<maxPage)
 							resultSet.add(resultObj);
 						
