@@ -134,7 +134,7 @@ public class PageCrawler implements Runnable{
 							String hyperlink = (String) saSet.getAttribute(HTML.Attribute.HREF);
 							//add code to handle relative links by prepending the current page's URL
 							String newLink=filterLinks(hyperlink,urlobj);
-							//System.out.println("Raw link= "+hyperlink+"\n"+"Parsed hyperlink = "+newLink+"\n");
+							System.out.println("Raw link= "+hyperlink+"\n"+"Parsed hyperlink = "+newLink+"\n");
 							if (newLink != null && !queue.contains(newLink) && !urlsTraversed.contains(newLink)){
 								//processPage(newLink);
 								queue.add(newLink);
@@ -242,14 +242,31 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 			
 			if(givenDomain.startsWith("www.")){
 				givenDomain = givenDomain.substring(4);
+				
 			}
+			
+			//System.out.println("Given domain "+ givenDomain);
+			int indexOfLastDot = givenDomain.lastIndexOf(".",givenDomain.length()-1);
+			int indexOfSecondLastDot = givenDomain.lastIndexOf(".",indexOfLastDot-1);
+			if(indexOfLastDot>-1 && indexOfSecondLastDot>=-1){
+				givenDomain=givenDomain.substring(indexOfSecondLastDot+1, givenDomain.length());
+			}
+			
 			if(crawledUrlDomain.startsWith("www.")){
 				crawledUrlDomain = crawledUrlDomain.substring(4);
 			}
 			
+			//System.out.println("crawledUrl Domain "+ crawledUrlDomain);
+			indexOfLastDot = crawledUrlDomain.lastIndexOf(".",crawledUrlDomain.length()-1);
+			indexOfSecondLastDot = crawledUrlDomain.lastIndexOf(".",indexOfLastDot-1);
+			if(indexOfLastDot>-1 && indexOfSecondLastDot>=-1){
+				crawledUrlDomain=crawledUrlDomain.substring(indexOfSecondLastDot+1, crawledUrlDomain.length());
+			}
+			
+			if (givenDomain ==null || crawledUrlDomain ==null) return null;
 			
 			if(!givenDomain.equals(crawledUrlDomain) ){   
-				//System.out.println("###################different host: "+domainURL.getHost()+"   "+crawledURL.getHost());
+				System.out.println("###################different host: "+domainURL.getHost()+"   "+crawledURL.getHost());
 				return null;
 			}else
 				return hyperlink;
@@ -289,10 +306,13 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 			
 			if(endsWithSlash)
 				return originalURL+hyperlink;
-			else{
-				indexOfLastSlash=originalURL.lastIndexOf("/", originalURL.length()-1);
+
+			indexOfLastSlash=originalURL.lastIndexOf("/", originalURL.length()-1);
+			if (indexOfLastSlash>6) // http://
 				return originalURL.substring(0,indexOfLastSlash)+"/"+hyperlink;
-			}
+			else
+				return originalURL+"/"+hyperlink;
+
 				
 			
 			
