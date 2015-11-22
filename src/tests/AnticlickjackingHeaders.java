@@ -17,31 +17,22 @@ public class AnticlickjackingHeaders {
 
 		List<String> xframe = null;
 		boolean antiClickEnabled = false;
-		String details = "Not found";
+		String details = "";
 		
 		System.out.print("Anti-Click-Jacking header: ");
 		antiClickEnabled = false;
 		
-		if(urlRespMap.containsKey("X-Frame-Options") || urlRespMap.containsKey("X-FRAME-OPTIONS") ){   
-			xframe = urlRespMap.get("X-Frame-Options");
-			if (xframe == null) 
-				xframe = urlRespMap.get("X-FRAME-OPTIONS");
-			if (xframe != null){
-				for (String value : xframe) {
-				    if (value.equalsIgnoreCase("deny") || value.equalsIgnoreCase("sameorigin")){
-				    	antiClickEnabled = true;
-				    	break;
-				    }
-				}
-			}
-		}
-		
-		resultObj.setAntiClickEnabled(antiClickEnabled); 
 		details = ResultHelper.addDetails(urlRespMap, resultObj, "X-Frame-Options");
 		
-		if (details.length()==0)
+		if (details.length()==0){
 			details="X-Frame-Options header not found!";
-		
+			antiClickEnabled = false;
+			System.out.println("not found ");
+		}else{
+			antiClickEnabled = true;
+			System.out.println("Found ");
+		}
+		resultObj.setAntiClickEnabled(antiClickEnabled);
 		resultObj.setAntiClickDetails(details);
 	}
 }

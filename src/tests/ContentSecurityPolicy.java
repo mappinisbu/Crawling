@@ -15,29 +15,21 @@ public class ContentSecurityPolicy {
 		
 
 		boolean cspEnabled = false;
-		String details = "Not found";
+		String details = "";
 		
 		System.out.print("Content-Security-Policy header: ");
-		
-		System.out.println("urlRespMap contents:");
-		for (Map.Entry<String, List<String>> mapEntry: urlRespMap.entrySet()){
-			if (mapEntry.getKey() != null) {
-					System.out.println("Key= "+mapEntry.getKey() + "Value= "+ mapEntry.getValue());
-				}
-		}	
-	
-		
-		if(urlRespMap.containsKey("Content-Security-Policy")) {
-			cspEnabled = true;
-		}else{
+
+		details = ResultHelper.addDetails(urlRespMap, resultObj, "Content-Security-Policy");
+		if (details.length()==0){
+			details="Content Security Policy header not found!";
 			cspEnabled = false;
+			System.out.println("not found ");
+		}else{
+			cspEnabled = true;
+			System.out.println("Found");
 		}
 		
-		resultObj.setCspEnabled(cspEnabled); 
-		details = ResultHelper.addDetails(urlRespMap, resultObj, "Content-Security-Policy");
-		if (details.length()==0)
-			details="Content Security Policy header not found!";
-		
+		resultObj.setCspEnabled(cspEnabled);
 		resultObj.setCspDetails(details);
     }
 }

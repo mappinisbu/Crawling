@@ -14,22 +14,21 @@ public class HttpStrictTransportPolicy {
 	public static void StartTest(Map<String, List<String>> urlRespMap, Result resultObj) {
 
 		boolean strictEnabled = false;
-		String details = "Not found";
+		String details = "";
 		
 		System.out.print("Strict-Transport-Security header: ");
-		if(urlRespMap.containsKey("Strict-Transport-Security")) {
-			System.out.print("Found\n");
-			strictEnabled = true;
-		}else{
-			strictEnabled = false;
-		}
-		
-		resultObj.setStrictEnabled(strictEnabled); 
+		 
 		details = ResultHelper.addDetails(urlRespMap, resultObj, "Strict-Transport-Security");
 		
-		if (details.length()==0)
+		if (details.length()==0){
 			details="Strict Transport Security header not found!";
-		
+			strictEnabled = false;
+			System.out.print("Not Found\n");
+		}else{
+			strictEnabled = true;
+			System.out.print("Found\n");
+		}
+		resultObj.setStrictEnabled(strictEnabled);
 		resultObj.setStrictDetails(details);
 	}
 }
