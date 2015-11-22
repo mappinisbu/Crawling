@@ -17,16 +17,16 @@ public class ContentSecurityPolicy {
 		boolean cspEnabled = false;
 		String details = "";
 		
-		System.out.print("Content-Security-Policy header: ");
+		//System.out.print("Content-Security-Policy header: ");
 
 		details = ResultHelper.addDetails(urlRespMap, resultObj, "Content-Security-Policy");
 		if (details.length()==0){
 			details="Content Security Policy header not found!";
 			cspEnabled = false;
-			System.out.println("not found ");
+			//System.out.println("not found ");
 		}else{
 			cspEnabled = true;
-			System.out.println("Found");
+			//System.out.println("Found");
 		}
 		
 		resultObj.setCspEnabled(cspEnabled);

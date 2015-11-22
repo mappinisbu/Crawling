@@ -16,7 +16,7 @@ public class Initialize {
 	
 	public static void StartCrawler(String domainName, int numberPages) {
 		
-		System.out.println("Start crawler!!!!!!!!!!!!!!!!!1");
+		//System.out.println("Start crawler!!!!!!!!!!!!!!!!!");
 		Controller.initialize(domainName, numberPages);
 		//StartSecurityChecks();
 	}

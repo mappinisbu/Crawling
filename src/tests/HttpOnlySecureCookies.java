@@ -60,14 +60,14 @@ public class HttpOnlySecureCookies {
 		secureCookieCount+=scriptCookieCounts[1];
 		
 		if(cookieCount>0 && secureCookieCount >0 && httpOnlyCookieCount > 0){
-			System.out.print("HttpOnly / secure cookies: ");
-			System.out.print("Found\n");
+			//System.out.print("HttpOnly / secure cookies: ");
+			//System.out.print("Found\n");
 		    resultObj.setHttpOnlyEnabled(true); 
 		}else if(cookieCount==0){
 			resultObj.setHttpOnlyEnabled(true);
 		}else{
-			System.out.print("HttpOnly / secure cookies: ");
-			System.out.print("Not found!\n");
+			//System.out.print("HttpOnly / secure cookies: ");
+			//System.out.print("Not found!\n");
 			resultObj.setHttpOnlyEnabled(false);
 		}	
 		
@@ -116,9 +116,9 @@ public class HttpOnlySecureCookies {
 		}
 		
 		
-		System.out.println("Total number of cookies= "+cookieCount );
-		System.out.println("Total number of secure cookies= "+secureCookieCount );
-		System.out.println("Total number of HttpOnly cookies= "+httpOnlyCookieCount );
+		//System.out.println("Total number of cookies= "+cookieCount );
+		//System.out.println("Total number of secure cookies= "+secureCookieCount );
+		//System.out.println("Total number of HttpOnly cookies= "+httpOnlyCookieCount );
 		
 		int[] cookieCounts=new int[3];
 		cookieCounts[0]=cookieCount ;
@@ -130,7 +130,7 @@ public class HttpOnlySecureCookies {
 	
 	
 	public static int[] examineScriptCookies(String rawHTML,URL urlobj){
-		System.out.println("Examining script coookies");
+		//System.out.println("Examining script coookies");
 		
 		int[] scriptCookieCounts=new int[2];
 		scriptCookieCounts[0]=0 ;
@@ -148,9 +148,9 @@ public class HttpOnlySecureCookies {
 			if(jsSrc != null && !jsSrc.isEmpty())
 		    {
 		    	// fetch the java script source and sanitize url
-				System.out.println(" examining java script source: " + jsSrc);
+				//System.out.println(" examining java script source: " + jsSrc);
 				jsSrc = PageCrawler.filterLinks(jsSrc, urlobj);
-				System.out.println(" examining java script absolute source: " + jsSrc);
+				//System.out.println(" examining java script absolute source: " + jsSrc);
 				URL url;
 				if(jsSrc != null && !jsSrc.isEmpty())
 				{
@@ -221,8 +221,8 @@ public class HttpOnlySecureCookies {
 			    }
 			}
 		}
-		System.out.println("Total number of cookies= "+scriptCookieCounts[0] );
-		System.out.println("Total number of secure cookies= "+scriptCookieCounts[1]);
+		//System.out.println("Total number of cookies= "+scriptCookieCounts[0] );
+		//System.out.println("Total number of secure cookies= "+scriptCookieCounts[1]);
 		return scriptCookieCounts;
 	}
 

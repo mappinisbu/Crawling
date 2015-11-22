@@ -39,7 +39,7 @@ public class UserInput extends HttpServlet {
     	
     	if (request.getParameter("option").contains("getUrls")) {
     		
-    		System.out.println("Entered GET request");
+    		//System.out.println("Entered GET request");
     		
     		//HashSet<String> urlsTraversed = new HashSet<String>();
     		//urlsTraversed = PageCrawler.getUrls();
@@ -53,9 +53,9 @@ public class UserInput extends HttpServlet {
             try {
             	//jsonUrls.put("urls", urlsTraversed);
             	jsonResults.put("resultObjects", results);
-            	System.out.println("jsonobject:" + jsonResults);
+            	//System.out.println("jsonobject:" + jsonResults);
 			} catch (JSONException e) {
-				System.out.println("[UserInput] JSONException: " + e);
+				//System.out.println("[UserInput] JSONException: " + e);
 				response.setStatus(500);
 			}
     		

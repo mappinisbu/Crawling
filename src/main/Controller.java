@@ -89,14 +89,14 @@ public class Controller {
 			
 			if(urlSet.size() >= maxPage || (urlQueue.size()==0 && done==true)){
 				
-				System.out.println("***************Controller if*****************");
+				//System.out.println("***************Controller if*****************");
 				int numThreadsCreated = runnableList.size();
 				for(int i=0;i<numThreadsCreated;i++){
 					
 					runnableList.get(i).finish();
 					try {
 						threadList.get(i).join();
-						System.out.println("No more pages to crawl. A thread is terminated by controller.");
+						//System.out.println("No more pages to crawl. A thread is terminated by controller.");
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -109,7 +109,8 @@ public class Controller {
 			
 		}
 		
-		System.out.println("***************Controller terminating*****************");
+		System.out.println("Crawling is finished. The number of pages crawled: "+urlSet.size());
+		//System.out.println("***************Controller terminating*****************");
 		
 		urls = new HashSet<String>(urlSet);
 		Iterator<Result> iter = resultSet.iterator();

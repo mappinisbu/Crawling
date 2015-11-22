@@ -86,23 +86,25 @@ public class PageCrawler implements Runnable{
 					
 					//if(urlsTraversed.size() == maxPages)
 						//return;
-					System.out.println("PageCrawler "+threadNum+" processing, urlSetsize: "+urlsTraversed.size()+"***************************");
+					
+					
 					urlsTraversed.add(url);
-					System.out.println("Start crawling page "+url);
+					//System.out.println("Start crawling page "+url);
 					count++;
 					//Connection urlConn = null;
 					HTMLDocument doc = null;
 					URL urlobj = null;
 					
-					System.out.println("==================================");
-					System.out.println("Trying to connect to  url:" + url);
+					//System.out.println("==================================");
+					System.out.println("PageCrawler "+threadNum+": "+"Crawling " + url);
+					
 					try {
 						
 						//urlConn = Jsoup.connect(url);
 						//doc = urlConn.get();
 						
 						urlobj = new URL(url);
-						System.out.println("Domain = "+ urlobj.getHost());
+						//System.out.println("Domain = "+ urlobj.getHost());
 						URLConnection conn = urlobj.openConnection();
 						conn.setRequestProperty("Accept", "application/xml,application/xhtml+xml,text/html,text/plain,*/*");
 						InputStreamReader rd = new InputStreamReader(conn.getInputStream());
@@ -132,7 +134,7 @@ public class PageCrawler implements Runnable{
 							String hyperlink = (String) saSet.getAttribute(HTML.Attribute.HREF);
 							//add code to handle relative links by prepending the current page's URL
 							String newLink=filterLinks(hyperlink,urlobj);
-							System.out.println("Raw link= "+hyperlink+"\n"+"Parsed hyperlink = "+newLink+"\n");
+							//System.out.println("Raw link= "+hyperlink+"\n"+"Parsed hyperlink = "+newLink+"\n");
 							if (newLink != null && !queue.contains(newLink) && !urlsTraversed.contains(newLink)){
 								//processPage(newLink);
 								queue.add(newLink);
@@ -148,7 +150,7 @@ public class PageCrawler implements Runnable{
 					    
 						Map<String, List<String>> urlRespMap = conn.getHeaderFields();
 						
-						printHeaders(urlRespMap);
+						//printHeaders(urlRespMap);
 										
 						Result resultObj=Initialize.StartSecurityChecks(url, urlobj, urlRespMap, rawHTML);
 						resultObj.setUrlName(url);
@@ -164,8 +166,8 @@ public class PageCrawler implements Runnable{
 				}
 			}
 		}
-		System.out.println("==============Thread "+threadNum+" terminating==============");
-		System.out.println("urlstraversed size: "+urlsTraversed.size());
+		System.out.println("PageCrawler "+threadNum+" terminating.");
+		//System.out.println("urlstraversed size: "+urlsTraversed.size());
 		//Controller.finish();
 		
 	}
@@ -245,7 +247,7 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 			
 			
 			if(!givenDomain.equals(crawledUrlDomain) ){   
-				System.out.println("###################different host: "+domainURL.getHost()+"   "+crawledURL.getHost());
+				//System.out.println("###################different host: "+domainURL.getHost()+"   "+crawledURL.getHost());
 				return null;
 			}else
 				return hyperlink;
@@ -253,12 +255,12 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 		}
 		
 		else if (hyperlink.startsWith("../")){
-			System.out.println("Resolving link beginning with ../");
+			//System.out.println("Resolving link beginning with ../");
 			String originalURL = urlobj.toString();
 			int indexOfLastSlash=originalURL.lastIndexOf("/", originalURL.length()-1);
-			System.out.println("last slash index= "+indexOfLastSlash);
+			//System.out.println("last slash index= "+indexOfLastSlash);
 			int indexOfSecondLastSlash=originalURL.lastIndexOf("/", indexOfLastSlash-1);
-			System.out.println("Second last slash index= "+indexOfSecondLastSlash);
+			//System.out.println("Second last slash index= "+indexOfSecondLastSlash);
 			if (indexOfSecondLastSlash>-1)
 				return originalURL.substring(0,indexOfSecondLastSlash)+hyperlink.substring(2);
 			else
@@ -266,7 +268,7 @@ public static String filterLinks(String hyperlink,URL urlobj ) {
 		}
 		
 		else if (hyperlink.startsWith("//")){  //protocol relative URL
-			System.out.println("Resolving link beginning with //");
+			//System.out.println("Resolving link beginning with //");
 			return filterLinks(urlobj.getProtocol()+":"+hyperlink,urlobj);  //could point to external domain, so pass again to filterLinks()
 		}
 		

@@ -19,7 +19,7 @@ public class AnticlickjackingHeaders {
 		boolean antiClickEnabled = false;
 		String details = "";
 		
-		System.out.print("Anti-Click-Jacking header: ");
+		//System.out.print("Anti-Click-Jacking header: ");
 		antiClickEnabled = false;
 		
 		details = ResultHelper.addDetails(urlRespMap, resultObj, "X-Frame-Options");
@@ -27,10 +27,10 @@ public class AnticlickjackingHeaders {
 		if (details.length()==0){
 			details="X-Frame-Options header not found!";
 			antiClickEnabled = false;
-			System.out.println("not found ");
+			//System.out.println("not found ");
 		}else{
 			antiClickEnabled = true;
-			System.out.println("Found ");
+			//System.out.println("Found ");
 		}
 		resultObj.setAntiClickEnabled(antiClickEnabled);
 		resultObj.setAntiClickDetails(details);
