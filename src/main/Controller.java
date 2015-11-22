@@ -63,7 +63,7 @@ public class Controller {
 		boolean done=false;
 		
 		//Stop threads when the number of pages crawled reach the maxPage.
-		while(urlQueue.size()>0 || done == false || urlSet.size() <=maxPage){
+		while(urlQueue.size()>0 || done == false || resultSet.size() <=maxPage){
 			
 			int numPagesAdded=0;
 			for(int i=0;i<threadCount;i++){
@@ -87,7 +87,7 @@ public class Controller {
 					done = true;
 			}
 			
-			if(urlSet.size() >= maxPage || (urlQueue.size()==0 && done==true)){
+			if(resultSet.size() >= maxPage || (urlQueue.size()==0 && done==true)){
 				
 				//System.out.println("***************Controller if*****************");
 				int numThreadsCreated = runnableList.size();
