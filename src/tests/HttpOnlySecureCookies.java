@@ -161,10 +161,10 @@ public class HttpOnlySecureCookies {
 					    BufferedReader br = new BufferedReader(isr);
 					    javascriptString = PageCrawler.getStringFromBufferedReader(br);
 				    } catch (MalformedURLException e) {					
-					    e.printStackTrace();
+					    System.out.println("Invalid url, continuing...");
 				    } catch (IOException e) {
 					    // printing and ignoring error
-					    e.printStackTrace();
+					    System.out.println("Invalid url, continuing...");
 				    }
 		    	
 		        }
