@@ -17,12 +17,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import main.*;
+import objects.Result;
 
 @WebServlet("/UserInput")
 public class UserInput extends HttpServlet {
  
-    protected void doPost(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	String domainName = request.getParameter("domainName");
     	int numberPages = Integer.parseInt(request.getParameter("numberPages"));
@@ -32,27 +32,45 @@ public class UserInput extends HttpServlet {
     	response.setStatus(200);
     }
     
-    protected void doGet(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-    	if (request.getParameter("get").indexOf("getUrls") > -1) {
-    		HashSet<String> urlsTraversed = new HashSet<String>();
-    		urlsTraversed = PageCrawler.getUrls();
+    	//disable caching
+    	response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+    	
+    	if (request.getParameter("option").contains("getUrls")) {
     		
-    		JSONObject jsonUrls = new JSONObject();
+    		//System.out.println("Entered GET request");
+    		
+    		//HashSet<String> urlsTraversed = new HashSet<String>();
+    		//urlsTraversed = PageCrawler.getUrls();
+    		
+    		HashSet<Result> results = new HashSet<Result>();
+    		results = Controller.getResults();
+    		
+    		//JSONObject jsonUrls = new JSONObject();
+    		JSONObject jsonResults = new JSONObject();
+    		
             try {
-            	jsonUrls.put("urls", urlsTraversed);
+            	//jsonUrls.put("urls", urlsTraversed);
+            	jsonResults.put("resultObjects", results);
+            	//System.out.println("jsonobject:" + jsonResults);
 			} catch (JSONException e) {
-				System.out.println("[UserInput] JSONException: " + e);
+				//System.out.println("[UserInput] JSONException: " + e);
 				response.setStatus(500);
 			}
     		
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
-            out.print(jsonUrls);
+            //out.print(jsonUrls);
+            //System.out.println("json Results:  "+ jsonResults);
+            out.print(jsonResults);
             out.flush();
     		response.setStatus(200);
+    	} else if (request.getParameter("option").contains("clearUrls")) {
+    		Controller.clearResults();
+    		response.setStatus(200);
     	} else {
+    	
     		response.setStatus(400);
     	}   	
     	

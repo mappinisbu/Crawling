@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	  <title>Crawler Index Page</title>
+	  <title>CSE509 Distributed Web Crawler</title>
 	  <link rel="stylesheet" type="text/css" href="style/index.css">
 	  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 	  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -9,10 +9,11 @@
 	  <script src="scripts/index.js"></script>
 	</head>
 	<body>
-	<div id="crawler">
+	<div id="crawler" data-role="page">
 		<div id="divGroup">
 			<div id="groupMain">
-		  		<a>Group Members: Shriya Gupta, Mahathi Priya Appini, Jihyun Yang, Parikshit Bhattacharjee, Matthew Fleishman</a>
+				<h id="headerProject">Protectors of the Realm</h>
+		  		<a id="groupMembers">Group Members: Shriya Gupta, Mahathi Priya Appini, Jihyun Yang, Parikshit Bhattacharjee, Matthew Fleishman</a>
 	  		</div>
 	  	</div>
 		
@@ -27,37 +28,67 @@
 			  			<div class="inputField" id="leftNumber"><a>Number:</a></div>
 			  			<div class="inputField" id="rightNumber"><input id="numberPages" type="text" name="number"></div>
 			  		</div>
-			  		<div class="inputContent">
+			  		<div id="loaderDiv">
 				  		<img id="loader" src="images/loader.gif">
 				  	</div>
 				  	<div id="btns">
-				  		<button class="btnCrawl" id="btnSubmit" type="button">Start Crawling</button>
-				  		<button class="btnCrawl" id="btnResults" type="button">Show Results</button>
+				  		<div class="btnHolder">
+				  			<button class="btnCrawl" id="btnSubmit" type="button">Start Crawling</button>
+				  		</div>
+				  		<div class="btnHolder">
+				  			<button class="btnCrawl" id="btnClear" type="button">Clear Results</button>
+				  		</div>
 				  	</div>
 			  	</div>
+			  	<div id="divResultsData">
+			  		<div id="totalSecureUrls">
+				  		<a id="securePercent"><strong></strong></a>
+				  	</div>
+				  	<div id="divTableResults">
+					  	<table id="tableResults">
+						  	<thead>
+							  <tr>
+							  	<td class="tdResults" id="resultDataCsp"><strong></strong></td>
+							  </tr>
+							  <tr>
+							  	<td class="tdResults" id="resultDataStrict"><strong></strong></td>
+							  </tr>
+							  <tr>
+							 	 <td class="tdResults" id="resultDataHttpOnly"><strong></strong></td>
+							  </tr>
+							  <tr>
+							 	 <td class="tdResults" id="resultDataAntiClick"><strong></strong></td>
+							  </tr>
+							  <tr>
+							  	<td class="tdResults" id="resultDataNonces"><strong></strong></td>
+							  </tr>
+							</thead>
+						</table>
+					</div>
+				  </div>
 		  	</div>
 		
 		  <div class="content" id="contentTable">
 		  	
-		  	<div class="divPopup" data-role="popup" id="infoPopup1"><p>Info Text</p></div>
-		  	<div class="divPopup" data-role="popup" id="infoPopup2"><p>Info Text</p></div>
-		  	<div class="divPopup" data-role="popup" id="infoPopup3"><p>Info Text</p></div>
-		  	<div class="divPopup" data-role="popup" id="infoPopup4"><p>Info Text</p></div>
-		  	<div class="divPopup" data-role="popup" id="infoPopup5"><p>Info Text</p></div>
-		  
 			  <div class="divMain">
-			  	<table id="tableMain">
-				  <tr>
-				    <td id="tdUrl"><strong>URL</strong></td>
-				    <td class="tdHeader"><strong>Content-Security Policy</strong></td> 
-				    <td class="tdHeader"><strong>HTTP Strict Transport Policy</strong></td>
-				    <td class="tdHeader"><strong>HttpOnly and Secure Cookies</strong></td>
-				    <td class="tdHeader"><strong>Anticlickjacking headers (X-Frame-Options)</strong></td>
-				    <td class="tdHeader"><strong>Nonces in web forms</strong></td>
-				  </tr>
+			  	<table id="tableCrawl">
+				  	<thead>
+					  <tr>
+					    <td id="tdUrl"><strong>URL</strong></td>
+					    <td class="tdHeader"><strong>Content-Security Policy</strong></td> 
+					    <td class="tdHeader"><strong>HTTP Strict Transport Policy</strong></td>
+					    <td class="tdHeader"><strong>HttpOnly and Secure Cookies</strong></td>
+					    <td class="tdHeader"><strong>Anticlickjacking Headers</strong></td>
+					    <td class="tdHeader"><strong>Nonces in web forms</strong></td>
+					  </tr>
+					</thead>
+					<tbody id="tableBody">
+					</tbody>
 				</table>
 			  </div>
 		  </div>
+		</div>
+		<div id="popupList">
 		</div>
 	  </div>
 	</body>
